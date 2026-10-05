@@ -399,6 +399,28 @@ h3 em,
   text-transform: uppercase;
   opacity: 0.7;
 }
+/* Mobile header: shrink wordmark, logo and menu button so they don't crowd */
+@media (max-width: 600px) {
+  .brand {
+    gap: 0.6rem;
+  }
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+  .brand-name {
+    font-size: 1.25rem;
+  }
+  .brand-sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+  .menu-btn {
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem 0.5rem 0.85rem;
+    font-size: 0.68rem;
+  }
+}
 
 .nav-desktop {
   display: none;
@@ -538,8 +560,8 @@ h3 em,
   align-items: baseline;
   gap: 1rem;
   font-family: var(--serif);
-  font-size: clamp(2.4rem, 9vw, 5.5rem);
-  line-height: 1.05;
+  font-size: clamp(1.3rem, 5vw, 2.6rem);
+  line-height: 1.1;
   letter-spacing: -0.03em;
   padding: 0.35rem 0;
   transition: color 0.3s;
@@ -581,6 +603,14 @@ h3 em,
   background: var(--ink);
   color: var(--pearl);
   overflow: hidden;
+}
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    justify-content: flex-start;
+    padding-top: 7.5rem;
+    padding-bottom: 2.5rem;
+  }
 }
 
 .hero-bg {
@@ -841,9 +871,13 @@ h3 em,
   }
 }
 .chapter-label {
-  position: sticky;
-  top: 6rem;
   align-self: start;
+}
+@media (min-width: 900px) {
+  .chapter-label {
+    position: sticky;
+    top: 6rem;
+  }
 }
 .chapter-label .num {
   display: block;
