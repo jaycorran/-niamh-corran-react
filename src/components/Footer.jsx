@@ -7,6 +7,7 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div>
+          <img className="footer-logo" src="/1A-reverse.svg" alt="Niamh Corran Physiotherapy & Acupuncture" />
           <p className="footer-statement">
             Holistic care, <em className="em">built around you.</em>
           </p>

@@ -8,17 +8,7 @@ import { EASE } from "./Reveal";
 function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
-      <svg width="28" height="28" viewBox="0 0 64 64">
-        <path
-          d="M14 44c6-14 14-22 36-24-4 16-14 24-30 26"
-          fill="none"
-          stroke="#ff7a59"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path d="M20 40c4-8 10-13 22-14" fill="none" stroke="#9fe1cb" strokeWidth="3" strokeLinecap="round" />
-      </svg>
+      <img src="/1A-reverse.svg" alt="" />
     </span>
   );
 }
