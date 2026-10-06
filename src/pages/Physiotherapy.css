@@ -1,0 +1,8 @@
+/* Physiotherapy page — page-specific rules only (design §6, Stream E). */
+
+/* PhotoPlaceholder standing in for the "Approach" section photo (no physio stock photo
+   available; none may be invented, design §3 issue "approach"). Matches the spacing the
+   .section-photo figure used (margin-top under the heading). */
+.section-photo-ph {
+  margin: 2rem 0 0;
+}

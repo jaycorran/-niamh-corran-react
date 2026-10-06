@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PageHero, CTA } from "../components/Shared";
 import { Reveal, EASE } from "../components/Reveal";
+import "./Faq.css";
 
 const faqs = [
   {
@@ -72,7 +73,7 @@ export default function Faq() {
   return (
     <>
       <PageHero
-        eyebrow="FAQs"
+        compact
         title={
           <>
             Good <em>questions</em>

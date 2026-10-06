@@ -1,41 +1,48 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { Button, LinkArrow } from "./Button";
 import { Reveal } from "./Reveal";
 import { site } from "../data/site";
 
-/* ---------- Ambient blurred background blobs (with gentle parallax) ---------- */
-export function Ambient({ parallax = true }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 40, damping: 20 });
-  const sy = useSpring(y, { stiffness: 40, damping: 20 });
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (!parallax || reduce) return;
-    const onMove = (e) => {
-      x.set((e.clientX / window.innerWidth - 0.5) * 40);
-      y.set((e.clientY / window.innerHeight - 0.5) * 40);
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [parallax, reduce, x, y]);
-
+/* ---------- Soft organic wave divider (design §2.6) ---------- */
+export function Wave({ fill = "var(--cream)" }) {
   return (
-    <div className="hero-bg" aria-hidden="true">
-      <motion.div className="blob b1" style={{ x: sx, y: sy }} />
-      <motion.div className="blob b2" style={{ x: sy, y: sx }} />
-      <motion.div className="blob b3" style={{ x: sx, y: sy }} />
-      <div className="grain" />
-    </div>
+    <svg className="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+      <path
+        d="M0 40C240 8 480 8 720 32C960 56 1200 72 1440 48L1440 80L0 80Z"
+        fill={fill}
+      />
+    </svg>
   );
 }
 
 /* ---------- Scrolling marquee ---------- */
+// Perceived scroll speed is held CONSTANT in px/s across every page (the track travels
+// one group-width per cycle). The duration is derived from the measured width of a single
+// marquee-group via a ResizeObserver, so a long track (e.g. Acupuncture) and a short one
+// (Home) scroll at the same visual pace rather than a fixed 85s regardless of content.
+const MARQUEE_SPEED = 34; // px per second
+
 export function Marquee({ items, dark = false }) {
-  const group = (
-    <div className="marquee-group">
+  const groupRef = useRef(null);
+  const [duration, setDuration] = useState(null);
+
+  useEffect(() => {
+    const el = groupRef.current;
+    if (!el) return;
+    const measure = () => {
+      // The track is two groups wide and translates -50% (exactly one group) per cycle,
+      // so the travelled distance equals one group's width.
+      const width = el.getBoundingClientRect().width;
+      if (width > 0) setDuration(width / MARQUEE_SPEED);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [items]);
+
+  const group = (ref) => (
+    <div className="marquee-group" ref={ref}>
       {items.map((t, i) => {
         const isLabel = typeof t === "object" && t !== null && t.label;
         return (
@@ -49,33 +56,30 @@ export function Marquee({ items, dark = false }) {
   );
   return (
     <div className={`marquee ${dark ? "dark" : ""}`} aria-hidden="true">
-      <div className="marquee-track">
-        {group}
-        {group}
+      <div
+        className="marquee-track"
+        style={duration ? { animationDuration: `${duration}s` } : undefined}
+      >
+        {group(groupRef)}
+        {group(null)}
       </div>
     </div>
   );
 }
 
 /* ---------- Sub-page hero ---------- */
-export function PageHero({ eyebrow, title, lead, cta = true, aside }) {
+export function PageHero({ title, lead, cta = true, aside, compact = false }) {
   return (
-    <section className="page-hero">
-      <Ambient />
+    <section className={`page-hero${compact ? " page-hero--compact" : ""}`}>
       <div className="container page-hero-inner">
-        <div>
-          <Reveal>
-            <p className="eyebrow on-dark">{eyebrow}</p>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h1>{title}</h1>
-          </Reveal>
-        </div>
-        <Reveal delay={0.18} className="page-hero-aside">
+        <Reveal gate={false}>
+          <h1>{title}</h1>
+        </Reveal>
+        <Reveal gate={false} delay={0.18} className="page-hero-aside">
           {lead && <p className="lead">{lead}</p>}
           {aside}
           {cta && (
-            <Button to="/booking" variant="glass">
+            <Button to="/booking" variant="ghost">
               Book an appointment
             </Button>
           )}
@@ -89,7 +93,6 @@ export function PageHero({ eyebrow, title, lead, cta = true, aside }) {
 export function CTA({ title, sub }) {
   return (
     <section className="cta" aria-labelledby="cta-title">
-      <Ambient parallax={false} />
       <div className="container cta-inner">
         <Reveal>
           <h2 id="cta-title">{title}</h2>
@@ -122,65 +125,6 @@ export function Chapter({ num, label, children, id }) {
       </div>
       <div>{children}</div>
     </div>
-  );
-}
-
-/* ---------- Custom cursor dot ---------- */
-export function Cursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.4 });
-  const [big, setBig] = useState(false);
-
-  useEffect(() => {
-    const onMove = (e) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-      const t = e.target;
-      setBig(!!(t && t.closest && t.closest("a, button, [role=button], input, select, textarea, label")));
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [x, y]);
-
-  return <motion.div className="cursor" style={{ x: sx, y: sy, scale: big ? 3 : 1 }} aria-hidden="true" />;
-}
-
-/* ---------- Preloader ---------- */
-export function Preloader({ onDone }) {
-  const [show, setShow] = useState(true);
-  const done = useRef(false);
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setShow(false);
-      if (!done.current) {
-        done.current = true;
-        onDone?.();
-      }
-    }, 1400);
-    return () => clearTimeout(t);
-  }, [onDone]);
-
-  if (!show) return null;
-  return (
-    <motion.div
-      className="preloader"
-      initial={{ opacity: 1 }}
-      exit={{ y: "-100%" }}
-      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-    >
-      <div className="word">
-        <motion.span
-          style={{ display: "inline-block" }}
-          initial={{ y: "110%" }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        >
-          Niamh Corran
-        </motion.span>
-      </div>
-    </motion.div>
   );
 }
 

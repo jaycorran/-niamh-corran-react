@@ -4,7 +4,6 @@ import { Button } from "../components/Button";
 export default function NotFound() {
   return (
     <PageHero
-      eyebrow="404"
       title={
         <>
           That page has <em>wandered off</em>
@@ -12,12 +11,13 @@ export default function NotFound() {
       }
       lead="The link may be old, or the page may have moved. Head back home, or book an appointment from here."
       cta={false}
+      compact
       aside={
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <div className="btn-row">
           <Button to="/" variant="ghost">
             Back home
           </Button>
-          <Button to="/booking" variant="glass">
+          <Button to="/booking" variant="coral">
             Book a visit
           </Button>
         </div>

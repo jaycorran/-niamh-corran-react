@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, LinkArrow } from "../components/Button";
-import { Ambient, Marquee, CTA, Chapter } from "../components/Shared";
+import { Marquee, CTA, Chapter, Wave } from "../components/Shared";
+import { CertifiedBand } from "../components/CertifiedBand";
 import { Reveal, Stagger, Item, Lines } from "../components/Reveal";
 import { Arrow, Check } from "../components/Icons";
 import { site, openNow, physioAreas, acupunctureAreas } from "../data/site";
+import "./Home.css";
 
 // Summarised treatment areas, grouped by discipline.
 const marqueeItems = [
@@ -52,6 +54,23 @@ const steps = [
   },
 ];
 
+// First three entries of Faq.jsx's `faqs` array, duplicated verbatim (Faq.jsx does not export
+// the array, and is owned by another stream — not edited here) for the FAQ teaser below.
+const faqTeaser = [
+  {
+    q: "Is acupuncture safe?",
+    a: "Yes. At the clinic, acupuncture is carried out by a chartered physiotherapist with specific training and qualifications in the technique. The needles are sterile, single-use and safely disposed of after every treatment.",
+  },
+  {
+    q: "Does it hurt?",
+    a: "It isn't a painful treatment. The fine needles are usually inserted just a few millimetres and produce a mild sensation at most. You may notice a small scratch as a needle goes in, and it's usually pain-free on removal.",
+  },
+  {
+    q: "Are there side effects?",
+    a: "Side effects are few, though some people feel a little tired or relaxed afterwards. Niamh will talk through anything relevant to you before treatment begins.",
+  },
+];
+
 function OpenStatus() {
   const [s, setS] = useState(() => openNow());
   useEffect(() => {
@@ -70,83 +89,120 @@ export default function Home() {
     <>
       {/* ============ HERO ============ */}
       <section className="hero" aria-labelledby="hero-title">
-        <Ambient />
-        <div className="container hero-inner">
-          <div className="hero-top">
-            <Reveal delay={0.1} y={10}>
-              <p className="eyebrow on-dark">Chartered physiotherapy & acupuncture · Kinsale & Carrigaline, Co. Cork</p>
-            </Reveal>
-            <Reveal delay={0.3} y={10}>
-              <div className="hero-scroll">
-                <i aria-hidden="true" />
-                Scroll
-              </div>
-            </Reveal>
-          </div>
-
-          <Lines
-            id="hero-title"
-            className="hero-title"
-            delay={0.15}
-            lines={[
-              "Restore balance.",
-              "Support wellbeing.",
-              <>
-                <em>Naturally.</em>
-              </>,
-            ]}
+        {/* Full-bleed treatment-room image, bleeding to the right edge and under the
+            transparent header. A cream-left gradient keeps the left copy and the dark
+            header text readable; a soft bottom fade blends into the Wave divider. */}
+        <div className="hero-media">
+          <img
+            className="hero-media__img"
+            src="/images/hero-treatment-1672.webp"
+            srcSet="/images/hero-treatment-900.webp 900w, /images/hero-treatment-1672.webp 1672w"
+            sizes="100vw"
+            width="1672"
+            height="941"
+            alt="Physiotherapist treating a patient's leg in a bright treatment room"
+            fetchPriority="high"
+            decoding="async"
           />
-
-          <div className="hero-bottom">
-            <Reveal delay={0.5}>
-              <p className="hero-lead">
-                Niamh provides chartered physiotherapy and traditional acupuncture, whether on their own or together, to
-                get to the root of what's going on and build a plan that works for you.
+          <span className="hero-media__fade" aria-hidden="true" />
+        </div>
+        <div className="container hero-inner">
+          <div className="hero-copy">
+            <Reveal gate={false} delay={0.05} y={10}>
+              <p className="eyebrow hero-eyebrow">
+                Chartered physiotherapy & acupuncture
+                <br />
+                Kinsale & Carrigaline, Co. Cork
+              </p>
+            </Reveal>
+            <Lines
+              id="hero-title"
+              className="hero-title"
+              delay={0.15}
+              lines={[
+                "Restore balance.",
+                "Support wellbeing.",
+                <>
+                  <em>Naturally.</em>
+                </>,
+              ]}
+            />
+            <Reveal gate={false} delay={0.5}>
+              <p className="lead hero-lead">
+                Niamh provides chartered physiotherapy and traditional acupuncture, whether on their own or together,
+                to get to the root of what's going on and build a plan that works for you.
               </p>
               <div className="hero-actions">
                 <Button to="/booking" variant="coral">
                   Book an appointment
                 </Button>
-                <a className="link-arrow" href="#services">
-                  How I can help <Arrow size={14} dir="down" />
-                </a>
+                <Button href="#services" variant="ghost">
+                  How I can help
+                </Button>
               </div>
-            </Reveal>
-
-            <Reveal delay={0.65} className="hero-card" as="aside" aria-label="Practice details">
-              <dl>
-                <div>
-                  <dt>Where</dt>
-                  <dd>
-                    Powerhouse Studio, Kinsale
-                    <br />
-                    Head 2 Toe Clinic, Carrigaline
-                  </dd>
-                </div>
-                <div>
-                  <dt>When</dt>
-                  <dd>
-                    Tue & Wed 8:00–21:00
-                    <br />
-                    Fri 8:00–17:00
-                  </dd>
-                  <OpenStatus />
-                </div>
-                <div>
-                  <dt>Registered</dt>
-                  <dd>CORU · ISCP Chartered</dd>
-                </div>
-              </dl>
             </Reveal>
           </div>
         </div>
+        <Wave fill="var(--cream)" />
+      </section>
+
+      <CertifiedBand />
+
+      {/* ============ PRACTICAL BITS ============ */}
+      <section className="section" aria-labelledby="practical-title" style={{ background: "var(--cream-2)" }}>
+        <Chapter num="01" label="The practical bits">
+          <h2 id="practical-title" className="visually-hidden">
+            Practical information
+          </h2>
+          <Stagger className="info">
+            {site.locations.map((loc) => (
+              <Item className="info-card" key={loc.name}>
+                <p className="eyebrow">{loc.name}</p>
+                <address>
+                  {loc.line1}
+                  <br />
+                  {loc.line2}
+                  <br />
+                  {loc.line3}
+                  <br />
+                  {loc.line4}
+                </address>
+                <LinkArrow href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" dir="upright">
+                  Open in Maps
+                </LinkArrow>
+                {loc.name === site.locations[0].name && <OpenStatus />}
+              </Item>
+            ))}
+            <Item className="info-card">
+              <p className="eyebrow">Fees</p>
+              {site.fees.map((f) => (
+                <div className="price-row" key={f.name}>
+                  <span>{f.name.replace(" treatment", "")}</span>
+                  <strong>
+                    €{f.price}
+                    <small>{f.duration}</small>
+                  </strong>
+                </div>
+              ))}
+              <p className="note">Receipts provided for {site.insurers.join(", ")}.</p>
+              <LinkArrow to="/fees">All fees</LinkArrow>
+            </Item>
+          </Stagger>
+          <div className="insurer-badges" aria-label="Insurers">
+            {site.insurers.map((ins) => (
+              <span className="insurer-badge" key={ins}>
+                {ins}
+              </span>
+            ))}
+          </div>
+        </Chapter>
       </section>
 
       <Marquee items={marqueeItems} />
 
-      {/* ============ 01 · SERVICES ============ */}
+      {/* ============ SERVICES ============ */}
       <section className="section" id="services" aria-labelledby="services-title">
-        <Chapter num="01" label="What I offer">
+        <Chapter num="02" label="What I offer">
           <h2 id="services-title" className="visually-hidden">
             Services
           </h2>
@@ -186,9 +242,45 @@ export default function Home() {
         </Chapter>
       </section>
 
-      {/* ============ 02 · MEET NIAMH ============ */}
-      <section className="section" aria-labelledby="niamh-title" style={{ paddingTop: 0 }}>
-        <Chapter num="02" label="Your practitioner">
+      {/* ============ PHOTO BAND · coastal stretch ============ */}
+      <section className="photo-band" aria-labelledby="band-title">
+        <img
+          className="photo-band__bg"
+          src="/images/coast-2400.webp"
+          srcSet="/images/coast-1200.webp 1200w, /images/coast-2400.webp 2400w"
+          sizes="100vw"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="photo-band__scrim" aria-hidden="true" />
+        <img
+          className="photo-band__figure"
+          src="/images/stretch-1600.webp"
+          srcSet="/images/stretch-900.webp 600w, /images/stretch-1600.webp 1067w"
+          sizes="(max-width: 767px) 80vw, 45vw"
+          alt="Woman easing tension in her neck and lower back"
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="container photo-band__inner">
+          <Reveal>
+            <h2 id="band-title" className="photo-band__title">
+              Get back to what <em>you love.</em>
+            </h2>
+            <div className="photo-band__actions">
+              <Button to="/booking" variant="coral">
+                Book an appointment
+              </Button>
+              <LinkArrow to="/physiotherapy">About physiotherapy</LinkArrow>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ MEET NIAMH ============ */}
+      <section className="section" aria-labelledby="niamh-title" style={{ paddingTop: 0, background: "var(--seafoam-tint)" }}>
+        <Chapter num="03" label="Your practitioner">
           <div className="grid-2">
             <Reveal>
               <div className="portrait">
@@ -204,7 +296,7 @@ export default function Home() {
               <h2 id="niamh-title" className="h2" style={{ fontSize: "clamp(1.9rem, 3.9vw, 3.6rem)" }}>
                 Care from someone who <em>listens, understands and knows</em>
               </h2>
-              <p style={{ marginTop: "1.5rem", color: "var(--muted)" }}>
+              <p style={{ marginTop: "1.5rem", color: "var(--ink-soft)" }}>
                 With over 20 years as a chartered physiotherapist across the NHS and Irish healthcare, Niamh brings deep
                 experience in neurology, chronic pain, respiratory and the care of older adults. Most recently she
                 qualified in traditional acupuncture, earning a Licentiate in Acupuncture with Distinction from the
@@ -232,15 +324,15 @@ export default function Home() {
         </Chapter>
       </section>
 
-      {/* ============ 03 · YOUR FIRST VISIT ============ */}
-      <section className="section on-dark" aria-labelledby="visit-title" style={{ background: "var(--ink)" }}>
-        <Chapter num="03" label="Your first visit">
+      {/* ============ YOUR FIRST VISIT ============ */}
+      <section className="section" aria-labelledby="visit-title" style={{ background: "var(--cloud)" }}>
+        <Chapter num="04" label="Your first visit">
           <Reveal>
             <h2 id="visit-title" className="h2" style={{ marginBottom: "2.5rem" }}>
               What an hour with Niamh <em>looks like</em>
             </h2>
           </Reveal>
-          <Stagger className="steps" as="ol">
+          <Stagger className="steps light" as="ol">
             {steps.map((s) => (
               <Item as="li" className="step" key={s.n}>
                 <span className="num" aria-hidden="true">
@@ -255,32 +347,54 @@ export default function Home() {
         </Chapter>
       </section>
 
-      {/* ============ 04 · PRACTICAL ============ */}
-      <section className="section" aria-labelledby="practical-title">
-        <Chapter num="04" label="The practical bits">
-          <h2 id="practical-title" className="visually-hidden">
-            Practical information
+      {/* ============ FAQ TEASER ============ */}
+      <section className="section" aria-labelledby="faq-teaser-title" style={{ background: "var(--seafoam-tint)" }}>
+        <Chapter num="05" label="Good questions">
+          <Reveal>
+            <h2 id="faq-teaser-title" className="h2" style={{ marginBottom: "2.5rem" }}>
+              Before your <em>first visit</em>
+            </h2>
+          </Reveal>
+          <Stagger className="faq-teaser">
+            {faqTeaser.map((f) => (
+              <Item as="div" className="info-card" key={f.q}>
+                <h3 className="h3" style={{ fontSize: "1.15rem" }}>
+                  {f.q}
+                </h3>
+                <p className="note">{f.a}</p>
+              </Item>
+            ))}
+          </Stagger>
+          <p style={{ marginTop: "2.5rem" }}>
+            <LinkArrow to="/faq">See all FAQs</LinkArrow>
+          </p>
+        </Chapter>
+      </section>
+
+      {/* ============ LOCATION/HOURS BAND ============ */}
+      <section className="section location-hours-band" aria-labelledby="hours-title" style={{ background: "var(--seafoam-tint)" }}>
+        <Chapter num="06" label="Where & when">
+          <h2 id="hours-title" className="visually-hidden">
+            Location and hours
           </h2>
           <Stagger className="info">
-            <Item className="info-card">
-              <p className="eyebrow">Where to find me</p>
-              {site.locations.map((loc, i) => (
-                <div key={loc.name} style={{ marginBottom: i < site.locations.length - 1 ? "1.5rem" : 0 }}>
-                  <address>
-                    {loc.line1}
-                    <br />
-                    {loc.line2}
-                    <br />
-                    {loc.line3}
-                    <br />
-                    {loc.line4}
-                  </address>
-                  <LinkArrow href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" dir="upright">
-                    Open in Maps
-                  </LinkArrow>
-                </div>
-              ))}
-            </Item>
+            {site.locations.map((loc) => (
+              <Item className="info-card" key={loc.name}>
+                <p className="eyebrow">{loc.name}</p>
+                <address>
+                  {loc.line1}
+                  <br />
+                  {loc.line2}
+                  <br />
+                  {loc.line3}
+                  <br />
+                  {loc.line4}
+                </address>
+                <LinkArrow href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" dir="upright">
+                  Open in Maps
+                </LinkArrow>
+              </Item>
+            ))}
             <Item className="info-card">
               <p className="eyebrow">Hours</p>
               <dl className="hours">
@@ -294,20 +408,7 @@ export default function Home() {
                 ))}
               </dl>
               <p className="note">Other days by arrangement.</p>
-            </Item>
-            <Item className="info-card">
-              <p className="eyebrow">Fees</p>
-              {site.fees.map((f) => (
-                <div className="price-row" key={f.name}>
-                  <span>{f.name.replace(" treatment", "")}</span>
-                  <strong>
-                    €{f.price}
-                    <small>{f.duration}</small>
-                  </strong>
-                </div>
-              ))}
-              <p className="note">Receipts provided for {site.insurers.join(", ")}.</p>
-              <LinkArrow to="/fees">All fees</LinkArrow>
+              <OpenStatus />
             </Item>
           </Stagger>
         </Chapter>

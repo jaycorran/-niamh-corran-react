@@ -1,7 +1,11 @@
 import { PageHero, CTA, Marquee } from "../components/Shared";
 import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Spine, Joint, Pulse, Cane, Scalpel, Brain } from "../components/Icons";
+import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
 import { physioAreas, physioConditions } from "../data/site";
+import "./Physiotherapy.css";
+
+const tints = ["sage", "peach", "sky", "blush"];
 
 // Titles come from physioAreas (shared with the Home marquee); icon + description live here.
 const conditions = [
@@ -47,7 +51,6 @@ export default function Physiotherapy() {
   return (
     <>
       <PageHero
-        eyebrow="Physiotherapy"
         title={
           <>
             Chartered <em>physiotherapy</em>
@@ -67,6 +70,7 @@ export default function Physiotherapy() {
               <h2 className="h2" style={{ marginTop: "1rem" }}>
                 Treating the cause, <em>not just the symptom</em>
               </h2>
+              <PhotoPlaceholder className="section-photo-ph" tint="sage" aspect="4 / 3" />
             </Reveal>
           </div>
           <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -85,7 +89,7 @@ export default function Physiotherapy() {
       </section>
 
       {/* Conditions */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
+      <section className="section" style={{ background: "var(--cream-2)" }}>
         <div className="container">
           <Reveal style={{ marginBottom: "3rem", maxWidth: "40rem" }}>
             <p className="eyebrow">How it helps</p>
@@ -98,9 +102,12 @@ export default function Physiotherapy() {
           </Reveal>
           <Stagger className="features" as="ul">
             {conditions.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
+              <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
+                </span>
+                <span className="icon-tile">
+                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
@@ -111,7 +118,7 @@ export default function Physiotherapy() {
       </section>
 
       {/* Detailed list */}
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container split">
           <div className="sticky">
             <Reveal>
@@ -135,15 +142,15 @@ export default function Physiotherapy() {
       </section>
 
       {/* What to expect */}
-      <section className="section on-dark" style={{ background: "var(--ink)" }}>
+      <section className="section" style={{ background: "var(--cream-2)" }}>
         <div className="container">
           <Reveal style={{ marginBottom: "3rem" }}>
-            <p className="eyebrow on-dark">Your visit</p>
+            <p className="eyebrow">Your visit</p>
             <h2 className="h2" style={{ marginTop: "1rem" }}>
               What to <em>expect</em>
             </h2>
           </Reveal>
-          <Stagger className="steps" as="ol">
+          <Stagger className="steps light" as="ol">
             {steps.map((s) => (
               <Item as="li" className="step" key={s.n}>
                 <span className="num" aria-hidden="true">

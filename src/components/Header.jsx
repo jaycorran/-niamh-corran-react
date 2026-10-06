@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav, site } from "../data/site";
 import { Button } from "./Button";
@@ -8,7 +8,7 @@ import { EASE } from "./Reveal";
 function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
-      <img src="/1A-reverse.svg" alt="" />
+      <img src="/1A-original.svg" alt="" />
     </span>
   );
 }
@@ -26,29 +26,51 @@ function Brand({ onClick }) {
 }
 
 export function Header() {
+  const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  // Every page starts on a dark hero, so the header uses light text until scrolled.
-  const darkBg = true;
+  const menuRef = useRef(null);
+  const closeBtnRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("lenis-stopped", open);
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
+    document.documentElement.classList.toggle("menu-open", open);
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !menuRef.current) return;
+      const focusable = menuRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    if (open) {
+      closeBtnRef.current?.focus();
+      window.addEventListener("keydown", onKey);
+    }
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
     <>
-      <header className={["header", scrolled ? "scrolled" : "", darkBg ? "dark-bg" : ""].join(" ")}>
+      <header className={["header", scrolled ? "scrolled" : ""].join(" ")}>
         <div className="container header-inner">
           <Brand />
 
@@ -60,12 +82,12 @@ export function Header() {
                   {n.label}
                 </NavLink>
               ))}
-            <Button to="/booking" variant={scrolled ? "coral" : "glass"}>
-              Book a visit
-            </Button>
           </nav>
 
           <div className="header-right">
+            <Button to="/booking" variant="coral" className="header-cta">
+              Book a visit
+            </Button>
             <button
               className="menu-btn"
               aria-expanded={open}
@@ -87,16 +109,16 @@ export function Header() {
         {open && (
           <motion.div
             id="site-menu"
+            ref={menuRef}
             className="menu-overlay"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease: EASE }}
-            data-lenis-prevent
           >
             <div className="header-inner">
               <Brand onClick={() => setOpen(false)} />
-              <button className="menu-btn" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button ref={closeBtnRef} className="menu-btn" onClick={() => setOpen(false)} aria-label="Close menu">
                 Close
               </button>
             </div>

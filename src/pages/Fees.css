@@ -1,0 +1,3 @@
+/* Fees — page-specific rules only. The pricing cards, price type, ticks list and
+   note text are all shared primitives already restyled in index.css (.pricing,
+   .price-card, .price, .ticks, .note); this page has no rules unique to it. */

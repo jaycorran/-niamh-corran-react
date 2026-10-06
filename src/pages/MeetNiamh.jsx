@@ -2,6 +2,7 @@ import { PageHero, CTA } from "../components/Shared";
 import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Check } from "../components/Icons";
 import { site } from "../data/site";
+import "./MeetNiamh.css";
 
 const values = [
   {
@@ -26,7 +27,6 @@ export default function MeetNiamh() {
   return (
     <>
       <PageHero
-        eyebrow="Meet Niamh"
         title={
           <>
             Care from someone <em>who listens</em>
@@ -36,15 +36,25 @@ export default function MeetNiamh() {
       />
 
       {/* Bio */}
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container" style={{ maxWidth: "62rem" }}>
-          <Reveal>
+          {/* Low threshold: this block is several viewports tall on mobile, so 25% never enters view. */}
+          <Reveal amount={0.02}>
             <p className="eyebrow">About Niamh</p>
             <h2 className="h2" style={{ marginTop: "1rem" }}>
               A holistic approach <em>to your health</em>
             </h2>
-            <div className="portrait bio-portrait">
-              <img src="/Niamh.jpeg" alt="Niamh Corran, chartered physiotherapist and acupuncturist" />
+            <div className="photo-collage photo-collage-2up">
+              <div className="photo-collage-item photo-collage-main">
+                <img
+                  className="niamh-photo"
+                  src="/Niamh.jpeg"
+                  alt="Niamh Corran, chartered physiotherapist and acupuncturist"
+                />
+              </div>
+              <div className="photo-collage-item photo-collage-wide">
+                <img src="/home-clinic.jpeg" alt="The clinic room where Niamh sees patients" />
+              </div>
             </div>
             <div className="prose" style={{ marginTop: "1.5rem" }}>
               <p>
@@ -83,10 +93,10 @@ export default function MeetNiamh() {
       </section>
 
       {/* Philosophy */}
-      <section className="section on-dark" style={{ background: "var(--ink)" }}>
+      <section className="section" style={{ background: "var(--seafoam-tint)" }}>
         <div className="container">
           <Reveal style={{ maxWidth: "48rem", marginBottom: "3.5rem" }}>
-            <p className="eyebrow on-dark">Philosophy</p>
+            <p className="eyebrow">Philosophy</p>
             <h2 className="h2" style={{ marginTop: "1rem" }}>
               Gentle medicine. <em>Deeply personal.</em>
             </h2>
@@ -94,7 +104,7 @@ export default function MeetNiamh() {
               Every person is different, so every treatment plan should be too.
             </p>
           </Reveal>
-          <Stagger className="steps" as="ul">
+          <Stagger className="steps light" as="ul">
             {values.map((v, i) => (
               <Item as="li" className="step" key={v.t}>
                 <span className="num" aria-hidden="true">
@@ -110,7 +120,7 @@ export default function MeetNiamh() {
       </section>
 
       {/* Quote */}
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container" style={{ maxWidth: "60rem" }}>
           <Reveal>
             <p className="statement" style={{ textAlign: "center", margin: "0 auto" }}>

@@ -1,0 +1,4 @@
+/* Booking — page-specific rules only. The contact list, hours, success/email-template
+   panel are shared primitives already restyled in index.css (.contact-list, .hours,
+   .success, .email-template); this page has no rules unique to it. Booking remains a
+   mailto flow (Booking.jsx) — no form or backend added. */

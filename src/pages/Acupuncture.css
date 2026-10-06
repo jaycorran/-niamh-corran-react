@@ -1,0 +1,23 @@
+/* Acupuncture page — page-specific rules only (design §6, Stream E). */
+
+/* The three real clinic photos (issue 1) are close-up, top-down shots of hands placing
+   needles; nudge the crop per photo so the hands/needles stay in frame at narrow aspect
+   ratios, overriding the shared .section-photo default (60% 40%, tuned for the old temp
+   photo). */
+.section-photo img[src*="acupuncture-needle-placement-back"] {
+  object-position: 35% 55%;
+}
+.section-photo img[src*="acupuncture-two-hand-technique"] {
+  object-position: 50% 30%;
+}
+.section-photo img[src*="acupuncture-session-overview"] {
+  object-position: 50% 50%;
+}
+
+/* PhotoPlaceholder standing in for the cupping-section photo. Cupping is a different
+   treatment from acupuncture needling, so the needle photo was moved out (to the "Uses"
+   section) and no cupping stock photo may be invented. Match the spacing the
+   .section-photo figure used under the heading. */
+.section-photo-ph {
+  margin: 2rem 0 0;
+}

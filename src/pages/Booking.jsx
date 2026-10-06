@@ -3,6 +3,7 @@ import { Reveal } from "../components/Reveal";
 import { Button } from "../components/Button";
 import { Pin, Phone, Mail, Clock } from "../components/Icons";
 import { site } from "../data/site";
+import "./Booking.css";
 
 // Pre-filled email template. Tapping the button opens the visitor's own email
 // app with this ready to complete, no booking service or backend required.
@@ -30,7 +31,7 @@ export default function Booking() {
   return (
     <>
       <PageHero
-        eyebrow="Booking"
+        compact
         title={
           <>
             Book your <em>appointment</em>
@@ -128,7 +129,7 @@ export default function Booking() {
               <Button href={mailtoHref} variant="coral" block>
                 Email {site.email}
               </Button>
-              <p className="form-status" style={{ color: "var(--muted-light)" }}>
+              <p className="form-status">
                 Prefer to talk? Call <a href={site.phoneHref}>{site.phone}</a>.
               </p>
             </div>

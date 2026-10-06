@@ -76,13 +76,33 @@ export function Footer() {
             </li>
           </ul>
         </div>
+
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li>
+              <Link to="/privacy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/cookies">Cookie Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms">Terms & Disclaimer</Link>
+            </li>
+            <li>
+              <Link to="/accessibility">Accessibility</Link>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className="container footer-bottom">
-        <p>
-          © {year} {site.name} {site.tagline}
-        </p>
-        <p>Kinsale & Carrigaline, Co. Cork</p>
+        <div>
+          <p>
+            © {year} {site.name} {site.tagline}
+          </p>
+          <p>Kinsale & Carrigaline, Co. Cork</p>
+        </div>
       </div>
     </footer>
   );

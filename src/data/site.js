@@ -24,6 +24,13 @@ export const site = {
   phone: "087 251 7767",
   phoneHref: "tel:+353872517767",
   email: "niamhcorran1@gmail.com",
+  legalName: "Niamh Corran Physio Limited",
+  registeredAddress: {
+    line1: "Ballybogey",
+    line2: "Nohoval",
+    line3: "Co. Cork",
+    line4: "Ireland",
+  },
   locations,
   // Primary location kept as `address` for backward compatibility.
   address: locations[0],

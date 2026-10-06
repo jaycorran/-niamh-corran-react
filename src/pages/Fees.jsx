@@ -3,6 +3,7 @@ import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Button } from "../components/Button";
 import { Check } from "../components/Icons";
 import { site } from "../data/site";
+import "./Fees.css";
 
 const notes = [
   `Receipts provided for private health insurance (${site.insurers.join(", ")}).`,
@@ -15,7 +16,7 @@ export default function Fees() {
   return (
     <>
       <PageHero
-        eyebrow="Fees"
+        compact
         title={
           <>
             Simple, <em>transparent</em> pricing
@@ -24,13 +25,13 @@ export default function Fees() {
         lead="Every session includes time to talk, treat and plan, and receipts are provided for private health insurance."
       />
 
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container">
           <Stagger className="pricing">
             {site.fees.map((f) => (
               <Item as="article" className={`price-card ${f.featured ? "featured" : ""}`} key={f.name}>
                 {f.featured && <span className="badge">Most common</span>}
-                <p className="eyebrow" style={{ color: f.featured ? "var(--glass)" : undefined }}>
+                <p className="eyebrow" style={{ color: f.featured ? "var(--seafoam)" : undefined }}>
                   {f.duration}
                 </p>
                 <h3>{f.name}</h3>
@@ -55,7 +56,7 @@ export default function Fees() {
         </div>
       </section>
 
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
+      <section className="section" style={{ background: "var(--seafoam-tint)" }}>
         <div className="container split">
           <div className="sticky">
             <Reveal>

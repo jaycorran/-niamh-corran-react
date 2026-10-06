@@ -1,0 +1,3 @@
+/* FAQ — page-specific rules only. The accordion (.faq, .faq-item, .faq-q, .plus,
+   .faq-a) is a shared primitive already restyled in index.css; this page has no
+   rules unique to it. framer-motion accordion behaviour in Faq.jsx is unchanged. */

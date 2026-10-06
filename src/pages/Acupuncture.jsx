@@ -1,7 +1,11 @@
 import { PageHero, CTA, Marquee } from "../components/Shared";
 import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Lotus, Moon, Flower, Body, Leaf, Pulse, Brain } from "../components/Icons";
+import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
 import { acupunctureAreas, acupunctureConditions } from "../data/site";
+import "./Acupuncture.css";
+
+const tints = ["sage", "peach", "sky", "blush"];
 
 // Titles come from acupunctureAreas (shared with the Home marquee); icon + description live here.
 const focus = [
@@ -89,7 +93,6 @@ export default function Acupuncture() {
   return (
     <>
       <PageHero
-        eyebrow="Acupuncture"
         title={
           <>
             Traditional <em>acupuncture</em>
@@ -112,6 +115,18 @@ export default function Acupuncture() {
               <p className="statement" style={{ marginTop: "1.5rem", fontSize: "clamp(1.3rem, 2vw, 1.8rem)" }}>
                 An ancient therapy that helps the body heal itself and return to balance.
               </p>
+              <figure className="section-photo">
+                <img
+                  src="/images/acupuncture-needle-placement-back-1600.webp"
+                  srcSet="/images/acupuncture-needle-placement-back-800.webp 800w, /images/acupuncture-needle-placement-back-1600.webp 1600w"
+                  sizes="(min-width: 900px) 40vw, 100vw"
+                  width="1600"
+                  height="1200"
+                  alt="Niamh placing fine acupuncture needles along a patient's lower back"
+                  loading="eager"
+                  decoding="async"
+                />
+              </figure>
             </Reveal>
           </div>
           <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -121,7 +136,7 @@ export default function Acupuncture() {
               lie along meridians, pathways along which energy, or "Qi", flows; keeping that flow free supports good
               health, while blockages can contribute to illness.
             </p>
-            <h3 className="h3" style={{ color: "var(--ink)", marginTop: "1rem" }}>
+            <h3 className="h3" style={{ color: "var(--forest)", marginTop: "1rem" }}>
               How it works
             </h3>
             <p>
@@ -136,7 +151,7 @@ export default function Acupuncture() {
       </section>
 
       {/* Focus areas */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
+      <section className="section" style={{ background: "var(--cream-2)" }}>
         <div className="container">
           <Reveal style={{ marginBottom: "3rem", maxWidth: "40rem" }}>
             <p className="eyebrow">How it helps</p>
@@ -149,9 +164,12 @@ export default function Acupuncture() {
           </Reveal>
           <Stagger className="features" as="ul">
             {focus.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
+              <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
+                </span>
+                <span className="icon-tile">
+                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
@@ -162,7 +180,7 @@ export default function Acupuncture() {
       </section>
 
       {/* Uses */}
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container split">
           <div className="sticky">
             <Reveal>
@@ -174,6 +192,18 @@ export default function Acupuncture() {
                 Acupuncture is used around the world to provide safe, effective relief for many conditions. Niamh
                 commonly uses it to help with:
               </p>
+              <figure className="section-photo">
+                <img
+                  src="/images/acupuncture-two-hand-technique-1600.webp"
+                  srcSet="/images/acupuncture-two-hand-technique-800.webp 800w, /images/acupuncture-two-hand-technique-1600.webp 1600w"
+                  sizes="(min-width: 900px) 40vw, 100vw"
+                  width="1600"
+                  height="1200"
+                  alt="Niamh using both hands to place acupuncture needles along a patient's upper back"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
             </Reveal>
           </div>
           <Reveal delay={0.1}>
@@ -187,7 +217,7 @@ export default function Acupuncture() {
       </section>
 
       {/* Cupping therapy */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
+      <section className="section" style={{ background: "var(--cream-2)" }}>
         <div className="container">
           <div className="split">
             <div className="sticky">
@@ -199,6 +229,7 @@ export default function Acupuncture() {
                 <p className="lead" style={{ marginTop: "1.25rem" }}>
                   An ancient therapy, used on its own or combined with acupuncture.
                 </p>
+                <PhotoPlaceholder className="section-photo-ph" tint="peach" aspect="4 / 3" caption="Cupping photo coming soon" />
               </Reveal>
             </div>
             <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -213,9 +244,12 @@ export default function Acupuncture() {
           </div>
           <Stagger className="features" as="ul" style={{ marginTop: "3rem" }}>
             {cuppingBenefits.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
+              <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
+                </span>
+                <span className="icon-tile">
+                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
@@ -226,7 +260,7 @@ export default function Acupuncture() {
       </section>
 
       {/* Electro-acupuncture */}
-      <section className="section">
+      <section className="section" style={{ background: "var(--cloud)" }}>
         <div className="container">
           <div className="split">
             <div className="sticky">
@@ -238,6 +272,18 @@ export default function Acupuncture() {
                 <p className="lead" style={{ marginTop: "1.25rem" }}>
                   A modern form of acupuncture that adds gentle electrical stimulation.
                 </p>
+                <figure className="section-photo">
+                  <img
+                    src="/images/acupuncture-session-overview-1600.webp"
+                    srcSet="/images/acupuncture-session-overview-800.webp 800w, /images/acupuncture-session-overview-1600.webp 1600w"
+                    sizes="(min-width: 900px) 40vw, 100vw"
+                    width="1600"
+                    height="1200"
+                    alt="Overhead view of an acupuncture session showing needles placed along a patient's back"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
               </Reveal>
             </div>
             <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -250,9 +296,12 @@ export default function Acupuncture() {
           </div>
           <Stagger className="features" as="ul" style={{ marginTop: "3rem" }}>
             {electroBenefits.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
+              <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
+                </span>
+                <span className="icon-tile">
+                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
@@ -263,10 +312,10 @@ export default function Acupuncture() {
       </section>
 
       {/* What to expect */}
-      <section className="section on-dark" style={{ background: "var(--ink)" }}>
+      <section className="section" style={{ background: "var(--cream-2)" }}>
         <div className="container">
           <Reveal style={{ marginBottom: "3rem" }}>
-            <p className="eyebrow on-dark">Your visit</p>
+            <p className="eyebrow">Your visit</p>
             <h2 className="h2" style={{ marginTop: "1rem" }}>
               What to <em>expect</em>
             </h2>
@@ -274,7 +323,7 @@ export default function Acupuncture() {
               Every visit is unhurried and centred on you.
             </p>
           </Reveal>
-          <Stagger className="steps" as="ol">
+          <Stagger className="steps light" as="ol">
             {steps.map((s) => (
               <Item as="li" className="step" key={s.n}>
                 <span className="num" aria-hidden="true">

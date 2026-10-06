@@ -1,0 +1,22 @@
+/* Meet Niamh — page-specific rules only. Shared primitives (.photo-collage,
+   .creds, .steps, .statement, .niamh-photo crop utility, etc.)
+   live in index.css (Stream A); this file holds only what is unique to this page. */
+
+/* Two-image bio collage (main portrait + wide clinic shot). The shared .photo-collage
+   grid assumes three slots (main spanning two rows + a detail/wide pair stacked beside
+   it); with the detail slot removed, drop to a plain two-column, single-row layout so
+   the clinic photo doesn't stretch to fill a now-empty second row. */
+.photo-collage-2up {
+  grid-template-rows: auto;
+}
+.photo-collage-2up .photo-collage-main {
+  grid-row: auto;
+}
+.photo-collage-2up .photo-collage-wide {
+  aspect-ratio: 4 / 5;
+}
+@media (max-width: 640px) {
+  .photo-collage-2up {
+    grid-template-columns: 1fr;
+  }
+}
