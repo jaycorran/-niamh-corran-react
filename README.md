@@ -48,7 +48,7 @@ npm run dev        # then open:
 - **Sizes / orientation**: A2–A6, portrait or landscape, selected from the non-printed toolbar and URL-addressable via `?size=a4&o=landscape`. The preview scales to fit the screen while keeping the exact ISO (1:√2) proportions.
 - **Export**: use the browser's **Print → Save as PDF** (toolbar button) — a dynamic `@page { size: <size> <orientation> }` rule prints at the real paper size and the toolbar is hidden in print.
 - **Dev-only / not shipped**: the route is gated behind `import.meta.env.DEV` and the component is loaded through a dynamic `import()` that sits inside that guard, so Rollup emits no poster chunk and `npm run build` leaves it out of `dist/`. It does not render under `npm run preview`.
-- **Assets**: the figure and background live outside the repo at `/Users/ijakubo/Desktop/Danio` (`BG.jpg`, `EweTrans.png`). They are served **only** by the dev server via `server.fs.allow` + `/@fs/...` URLs — never copied into `public/`, never imported through `src`, never bundled.
+- **Assets**: the poster images live in `src/pages/poster-assets/` and are imported only by the dev-only poster page, so they are never bundled into `dist/`.
 
 ## Still to do
 
