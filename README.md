@@ -50,6 +50,20 @@ npm run dev        # then open:
 - **Dev-only / not shipped**: the route is gated behind `import.meta.env.DEV` and the component is loaded through a dynamic `import()` that sits inside that guard, so Rollup emits no poster chunk and `npm run build` leaves it out of `dist/`. It does not render under `npm run preview`.
 - **Assets**: the poster images live in `src/pages/poster-assets/` and are imported only by the dev-only poster page, so they are never bundled into `dist/`.
 
+## Internal business-card designer (dev only)
+
+A print-ready business-card designer lives at `/card` on the **dev server only** (gated exactly like `/poster`, never in `dist/`):
+
+```
+npm run dev        # then open:
+# http://localhost:5173/card?style=linen
+```
+
+- **Styles**: Linen, Forest, Coast, Editorial and Sage, each with a matching front and back. Phone and email come from `src/data/site.js`.
+- **Size**: 85 × 55 mm (Irish/EU standard), laid out in millimetres. Toggle a 3 mm bleed (on by default), crop marks, and on-screen trim/safe-area guides (guides are never exported).
+- **Export PDF**: vector, true size, two pages (front, back) via the browser's print dialog → Save as PDF. Best for sending to a printer.
+- **Export PNG**: front or back as a raster at 300 or 600 dpi (e.g. 2150 × 1441 px at 600 dpi with bleed).
+
 ## Still to do
 
 - **Photos**: the Home hero arch, the Meet Niamh collage detail and the Physiotherapy "approach" photo use temporary stock images (`public/images/temp-*.webp`, marked `TEMP photo` in code) — swap in real photography of Niamh/the studio.

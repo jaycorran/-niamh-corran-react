@@ -27,6 +27,10 @@ import NotFound from "./pages/NotFound";
 // enough — Rollup emits a chunk for every import() it can see — so the call
 // itself must be in the dead branch.
 const Poster = import.meta.env.DEV ? lazy(() => import("./pages/Poster.jsx")) : null;
+// Dev-only business-card designer, gated exactly like the poster.
+const BusinessCard = import.meta.env.DEV
+  ? lazy(() => import("./pages/BusinessCard.jsx"))
+  : null;
 
 const SITE_TITLE_SUFFIX = "Niamh Corran — Physiotherapy & Acupuncture, Kinsale & Carrigaline";
 const jsonLd = buildJsonLd(site);
@@ -55,22 +59,25 @@ function Page({ children, title, description }) {
 export default function App() {
   const location = useLocation();
 
-  // The dev-only /poster route is a static page: none of the Header/Footer
-  // chrome, rendered on its own, above everything else.
-  const isPoster = import.meta.env.DEV && location.pathname === "/poster";
+  // The dev-only /poster and /card routes are static pages: none of the
+  // Header/Footer chrome, rendered on their own, above everything else.
+  const DevTool = import.meta.env.DEV
+    ? { "/poster": Poster, "/card": BusinessCard }[location.pathname]
+    : null;
+  const isDevTool = Boolean(DevTool);
 
-  useNoOrphans(!isPoster);
+  useNoOrphans(!isDevTool);
 
   // Native scroll only (no Lenis); reset to top on every route change.
   useEffect(() => {
-    if (isPoster) return;
+    if (isDevTool) return;
     window.scrollTo(0, 0);
-  }, [location.pathname, isPoster]);
+  }, [location.pathname, isDevTool]);
 
-  if (isPoster) {
+  if (isDevTool) {
     return (
       <Suspense fallback={null}>
-        <Poster />
+        <DevTool />
       </Suspense>
     );
   }

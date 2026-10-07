@@ -1,0 +1,599 @@
+/* =====================================================================
+   Internal business-card designer — DEV ONLY. Imported solely by
+   BusinessCard.jsx (dev-gated lazy chunk), never shipped to dist/.
+   All card dimensions are in mm so print/PDF output is true size.
+   ===================================================================== */
+
+.card-root {
+  --c-cream: #faf7f2;
+  --c-cream-2: #f3ede3;
+  --c-sage: #e4ede4;
+  --c-ink: #1f2d26;
+  --c-forest: #2f4a3c;
+  --c-leaf: #6f8f7c;
+  --c-deep: #243a30;
+  --c-on-deep: #f3f0ea;
+  --c-on-deep-soft: #c3d2c7;
+  --c-mint: #a9d4bf;
+  --serif: "Playfair Display Variable", Georgia, serif;
+  --sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: #1a2420;
+  color: var(--c-on-deep);
+  font-family: var(--sans);
+}
+
+/* ---- Toolbar (never printed) ---------------------------------------- */
+.card-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.1rem;
+  padding: 0.6rem 1rem;
+  background: var(--c-deep);
+  font-size: 0.85rem;
+}
+.card-toolbar__brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.card-styles {
+  display: inline-flex;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  border: 1px solid rgba(243, 240, 234, 0.25);
+  border-radius: 999px;
+}
+.card-styles button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-on-deep);
+  font: inherit;
+  cursor: pointer;
+}
+.card-styles button:hover {
+  background: rgba(243, 240, 234, 0.08);
+}
+.card-styles button.is-active {
+  background: var(--c-cream);
+  color: var(--c-deep);
+  font-weight: 700;
+}
+.card-swatch {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+.card-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+.card-check input {
+  accent-color: var(--c-mint);
+}
+.card-check.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.card-toolbar__export {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+.card-toolbar__export label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.card-toolbar select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(243, 240, 234, 0.3);
+  border-radius: 8px;
+  background: var(--c-forest);
+  color: var(--c-on-deep);
+  font: inherit;
+}
+.card-toolbar__export button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(243, 240, 234, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-on-deep);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.card-toolbar__export button svg {
+  width: 1em;
+  height: 1em;
+}
+.card-toolbar__export button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.card-toolbar__export .card-print {
+  border-color: var(--c-cream);
+  background: var(--c-cream);
+  color: var(--c-deep);
+  font-weight: 700;
+}
+
+/* ---- Stage ------------------------------------------------------------ */
+.card-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: safe center;
+  justify-content: safe center;
+  gap: 1.25rem 2.5rem;
+  padding: 1.5rem;
+}
+.card-stage.is-stacked {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: safe center;
+}
+.card-side {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.card-side figcaption {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-on-deep-soft);
+}
+/* The slot reserves the scaled footprint; the sheet inside renders at true
+   mm size and is scaled for viewing only. */
+.card-slot {
+  width: calc(var(--sheet-w) * var(--k));
+  height: calc(var(--sheet-h) * var(--k));
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
+}
+.card-meta {
+  flex-basis: 100%;
+  flex-shrink: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--c-on-deep-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Sheet (one printed page) ----------------------------------------- */
+.bc-sheet {
+  position: relative;
+  width: var(--sheet-w);
+  height: var(--sheet-h);
+  transform: scale(var(--k));
+  transform-origin: 0 0;
+  background: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.bc-crop i {
+  position: absolute;
+  display: block;
+  border: 0 solid #000;
+}
+.bc-crop__h {
+  width: calc(var(--slug) - var(--mark-gap));
+  border-top-width: 0.25pt !important;
+}
+.bc-crop__v {
+  height: calc(var(--slug) - var(--mark-gap));
+  border-left-width: 0.25pt !important;
+}
+.bc-crop--tl .bc-crop__h,
+.bc-crop--bl .bc-crop__h {
+  left: 0;
+}
+.bc-crop--tr .bc-crop__h,
+.bc-crop--br .bc-crop__h {
+  right: 0;
+}
+.bc-crop--tl .bc-crop__h,
+.bc-crop--tr .bc-crop__h {
+  top: calc(var(--slug) + var(--bleed));
+}
+.bc-crop--bl .bc-crop__h,
+.bc-crop--br .bc-crop__h {
+  bottom: calc(var(--slug) + var(--bleed));
+}
+.bc-crop--tl .bc-crop__v,
+.bc-crop--bl .bc-crop__v {
+  left: calc(var(--slug) + var(--bleed));
+}
+.bc-crop--tr .bc-crop__v,
+.bc-crop--br .bc-crop__v {
+  right: calc(var(--slug) + var(--bleed));
+}
+.bc-crop--tl .bc-crop__v,
+.bc-crop--tr .bc-crop__v {
+  top: 0;
+}
+.bc-crop--bl .bc-crop__v,
+.bc-crop--br .bc-crop__v {
+  bottom: 0;
+}
+
+/* ---- Card ---------------------------------------------------------------- */
+.bc {
+  --bg: var(--c-cream);
+  --fg: var(--c-ink);
+  --soft: var(--c-forest);
+  --icon: var(--c-forest);
+  --safe: 4.5mm;
+
+  position: absolute;
+  top: var(--slug);
+  left: var(--slug);
+  width: var(--card-w);
+  height: var(--card-h);
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+.bc p {
+  margin: 0;
+}
+.bc__safe {
+  position: absolute;
+  inset: calc(var(--bleed) + var(--safe));
+  z-index: 2;
+}
+.bc-mark {
+  display: block;
+  height: auto;
+}
+
+/* Preview guides: trim (dashed) and safe area (dotted). */
+.bc-guide {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+}
+.bc-guide--trim {
+  inset: var(--bleed);
+  outline: 0.2mm dashed rgba(220, 40, 90, 0.75);
+}
+.bc-guide--safe {
+  inset: calc(var(--bleed) + var(--safe));
+  outline: 0.15mm dotted rgba(40, 120, 220, 0.6);
+}
+
+/* ---- Shared front lockup (centred) ------------------------------------- */
+.bc--front .bc__safe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3mm;
+  text-align: center;
+}
+.bc--front .bc__logo {
+  width: 15.5mm;
+}
+.bc__name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 6.6mm;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.bc__tag {
+  margin-top: 1.7mm !important;
+  font-size: 2.15mm;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+/* ---- Shared back layout: mark left, details right --------------------- */
+.bc--back .bc__safe {
+  display: grid;
+  grid-template-columns: 17mm 1fr;
+  grid-template-areas:
+    "logo who"
+    "logo contact";
+  column-gap: 5.5mm;
+  row-gap: 3.2mm;
+  align-content: center;
+  align-items: center;
+}
+.bc--back .bc__logo {
+  grid-area: logo;
+  width: 17mm;
+}
+.bc__who {
+  grid-area: who;
+  align-self: end;
+}
+.bc--back .bc__name {
+  font-size: 4.6mm;
+}
+.bc__role {
+  margin-top: 1.3mm !important;
+  font-size: 2.5mm;
+  font-weight: 600;
+  color: var(--fg);
+}
+.bc__creds {
+  margin-top: 0.8mm !important;
+  font-size: 2.1mm;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--soft);
+  white-space: nowrap;
+}
+.bc__contact {
+  grid-area: contact;
+  align-self: start;
+  display: grid;
+  gap: 1.15mm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 2.5mm;
+  font-weight: 500;
+  font-variant-numeric: lining-nums;
+}
+.bc__contact li {
+  display: flex;
+  align-items: center;
+  gap: 1.7mm;
+  white-space: nowrap;
+}
+.bc__contact svg {
+  flex: none;
+  width: 2.7mm;
+  height: 2.7mm;
+  color: var(--icon);
+}
+
+/* ---- Dark side tokens (reused) ----------------------------------------- */
+.bc--linen.bc--back,
+.bc--sage.bc--back,
+.bc--forest.bc--front {
+  --bg: var(--c-deep);
+  --fg: var(--c-on-deep);
+  --soft: var(--c-on-deep-soft);
+  --icon: var(--c-mint);
+}
+
+/* ---- 1. Linen: cream front, forest back ------------------------------- */
+/* (defaults + dark-side tokens) */
+
+/* ---- 2. Forest: deep front, cream editorial back ---------------------- */
+.bc--forest.bc--front {
+  background:
+    radial-gradient(70mm 50mm at 50% 35%, rgba(169, 212, 191, 0.14), transparent 70%),
+    var(--bg);
+}
+.bc--forest.bc--front .bc__tag {
+  color: var(--c-mint);
+}
+.bc--forest.bc--back .bc__safe,
+.bc--coast.bc--back .bc__safe {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "who"
+    "contact";
+  row-gap: 0;
+  align-content: center;
+}
+.bc--forest.bc--back .bc__logo,
+.bc--coast.bc--back .bc__logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 9mm;
+}
+.bc--forest.bc--back .bc__contact,
+.bc--coast.bc--back .bc__contact {
+  margin-top: 3.4mm;
+  padding-top: 3.4mm;
+  border-top: 0.2mm solid rgba(47, 74, 60, 0.28);
+}
+
+/* ---- 3. Coast: photo front, cream back ------------------------------ */
+.bc--coast.bc--front {
+  --fg: var(--c-ink);
+}
+.bc__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 30% 62%;
+}
+.bc__wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    95deg,
+    rgba(250, 247, 242, 0.95) 0%,
+    rgba(250, 247, 242, 0.92) 52%,
+    rgba(250, 247, 242, 0.5) 72%,
+    rgba(250, 247, 242, 0) 92%
+  );
+}
+.bc--coast.bc--front .bc__safe,
+.bc--sage.bc--front .bc__safe {
+  align-items: flex-start;
+  text-align: left;
+  gap: 3.4mm;
+}
+.bc--coast.bc--front .bc__logo,
+.bc--sage.bc--front .bc__logo {
+  width: 11mm;
+}
+.bc--coast.bc--front .bc__tag,
+.bc--sage.bc--front .bc__tag {
+  letter-spacing: 0.22em;
+}
+.bc--coast.bc--back {
+  --bg: var(--c-cream);
+}
+/* A strip of the same coast photo along the bottom edge ties back to front. */
+.bc__strip {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--bleed) + 3mm);
+  object-fit: cover;
+  object-position: 50% 58%;
+}
+
+/* ---- 4. Editorial: cream, left-aligned, italic serif tagline -------- */
+.bc--editorial.bc--front .bc__safe {
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  gap: 0;
+}
+.bc--editorial.bc--front .bc__logo {
+  width: 9mm;
+}
+.bc--editorial.bc--front .bc__name {
+  font-size: 8.2mm;
+}
+.bc--editorial.bc--front .bc__tag {
+  margin-top: 1.4mm !important;
+  font-family: var(--serif);
+  font-size: 3.3mm;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--c-ink);
+}
+.bc--editorial .bc__tag em {
+  font-style: italic;
+  color: var(--c-forest);
+}
+.bc--editorial.bc--back {
+  --bg: var(--c-cream-2);
+}
+.bc--editorial.bc--front .bc__lockup::before {
+  content: "";
+  display: block;
+  width: 12mm;
+  height: 0.45mm;
+  margin-bottom: 3.2mm;
+  border-radius: 1mm;
+  background: var(--c-forest);
+}
+.bc--editorial.bc--back .bc__safe {
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "who contact";
+  column-gap: 4.5mm;
+  align-items: center;
+}
+.bc--editorial.bc--back .bc__logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7mm;
+}
+.bc--editorial.bc--back .bc__who {
+  align-self: center;
+}
+.bc--editorial.bc--back .bc__role {
+  font-size: 2.35mm;
+  white-space: nowrap;
+}
+.bc--editorial.bc--back .bc__creds span {
+  display: block;
+}
+.bc--editorial.bc--back .bc__creds .bc__dot {
+  display: none;
+}
+.bc--editorial.bc--back .bc__contact li:last-child {
+  white-space: normal;
+  align-items: flex-start;
+}
+.bc--editorial.bc--back .bc__contact {
+  align-self: center;
+  padding-left: 4.5mm;
+  border-left: 0.2mm solid rgba(47, 74, 60, 0.28);
+  font-size: 2.3mm;
+}
+
+/* ---- 5. Sage: pastel front with oversized watermark mark ------------- */
+.bc--sage.bc--front {
+  --bg: var(--c-sage);
+}
+.bc__watermark {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--bleed) - 9mm);
+  right: calc(var(--bleed) - 15mm);
+  width: 62mm;
+}
+
+/* ---- Print: one sheet per page, true size, no chrome ----------------- */
+@media print {
+  .card-root {
+    position: static;
+    display: block;
+    background: #fff;
+  }
+  .card-toolbar,
+  .card-meta,
+  .card-side figcaption,
+  .bc-guide {
+    display: none !important;
+  }
+  .card-stage {
+    display: block;
+    padding: 0;
+    overflow: visible;
+  }
+  .card-side {
+    display: block;
+  }
+  .card-slot {
+    width: auto;
+    height: auto;
+    filter: none;
+  }
+  .bc-sheet {
+    transform: none;
+    break-after: page;
+  }
+  .card-side:last-of-type .bc-sheet {
+    break-after: auto;
+  }
+}
