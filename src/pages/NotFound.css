@@ -1,0 +1,71 @@
+.not-found-room {
+  display: grid;
+  align-items: center;
+  min-height: min(860px, 88vh);
+  padding-block: clamp(9rem, 18vw, 14rem) clamp(5rem, 10vw, 9rem);
+  background: var(--forest);
+  color: var(--on-forest);
+}
+
+.not-found-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.not-found-room h1 {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  line-height: 1.02;
+}
+
+.not-found-room h1 em {
+  color: var(--accent-on-forest);
+}
+
+.not-found-aside {
+  display: grid;
+  gap: 2rem;
+  max-width: 34rem;
+  color: var(--on-forest-soft);
+  line-height: 1.7;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.not-found-ghost.btn.button-system.ghost {
+  color: var(--on-forest);
+  border-color: var(--on-forest);
+}
+
+.not-found-ghost.btn.button-system.ghost:hover,
+.not-found-ghost.btn.button-system.ghost:focus-visible {
+  background: var(--on-forest);
+  border-color: var(--on-forest);
+  color: var(--forest);
+}
+
+@media (min-width: 980px) {
+  .not-found-inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    align-items: end;
+  }
+
+  .not-found-inner > :first-child {
+    grid-column: 1 / span 2;
+    align-self: start;
+  }
+
+  .not-found-inner > :nth-child(2) {
+    grid-column: 3 / span 6;
+  }
+
+  .not-found-aside {
+    grid-column: 9 / -1;
+  }
+}

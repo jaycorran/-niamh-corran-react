@@ -1,10 +1,16 @@
-import { PageHero, CTA, Marquee } from "../components/Shared";
-import { Reveal, Stagger, Item } from "../components/Reveal";
+import {
+  ClosingRoom,
+  MarginNoteSection,
+  QuietRiver,
+  TypographicPageHero,
+} from "../components/Shared";
+import { Reveal } from "../components/Reveal";
 import { Spine, Joint, Pulse, Cane, Scalpel, Brain } from "../components/Icons";
+import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
 import { physioAreas, physioConditions } from "../data/site";
+import "./Physiotherapy.css";
 
-// Titles come from physioAreas (shared with the Home marquee); icon + description live here.
-const conditions = [
+const areas = [
   {
     Icon: Spine,
     p: "A full diagnosis and tailored plan for pain that can affect sleep, work, sport and daily life, and that sometimes shows up as headaches, arm or leg pain, or weakness.",
@@ -29,25 +35,24 @@ const conditions = [
     Icon: Brain,
     p: "Rehabilitation to improve movement, balance and everyday function for a range of neurological conditions.",
   },
-].map((c, i) => ({ ...c, t: physioAreas[i] }));
-
-const list = physioConditions;
+].map((area, index) => ({ ...area, title: physioAreas[index] }));
 
 const steps = [
-  { n: "1", t: "Assessment", p: "A full history and physical assessment to pinpoint the root cause of your symptoms." },
+  { number: "01", title: "Assessment", text: "A full history and physical assessment to pinpoint the root cause of your symptoms." },
   {
-    n: "2",
-    t: "Treatment",
-    p: "Hands-on therapy and, where useful, acupuncture, tailored to you and always explained clearly.",
+    number: "02",
+    title: "Treatment",
+    text: "Hands-on therapy and, where useful, acupuncture, tailored to you and always explained clearly.",
   },
-  { n: "3", t: "Rehab plan", p: "A simple home programme and guidance so progress continues between sessions." },
+  { number: "03", title: "Rehab plan", text: "A simple home programme and guidance so progress continues between sessions." },
 ];
 
 export default function Physiotherapy() {
   return (
     <>
-      <PageHero
-        eyebrow="Physiotherapy"
+      <TypographicPageHero
+        className="physio-hero"
+        marginNote="Kinsale & Carrigaline"
         title={
           <>
             Chartered <em>physiotherapy</em>
@@ -56,112 +61,114 @@ export default function Physiotherapy() {
         lead="Expert, hands-on care to relieve pain, restore movement and get you back to doing what you love, with a plan built around your goals."
       />
 
-      <Marquee items={physioConditions} />
+      <QuietRiver className="physio-river" items={physioConditions} />
 
-      {/* Approach */}
-      <section className="section">
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
-              <p className="eyebrow">The approach</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
-                Treating the cause, <em>not just the symptom</em>
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
-            <p>
-              As a CORU-registered chartered physiotherapist, Niamh begins with a thorough assessment to understand
-              what's really driving your pain or restriction. From there, you'll get a clear, personalised treatment
-              plan that may combine hands-on therapy, targeted exercise and, where helpful, acupuncture or cupping.
-            </p>
-            <p>
-              A key part of every plan is preventing the problem coming back, leaving you stronger, more mobile and
-              better equipped for the future. Learning how the body and mind respond to pain and injury has also been
-              shown to speed up recovery.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Conditions */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
-        <div className="container">
-          <Reveal style={{ marginBottom: "3rem", maxWidth: "40rem" }}>
-            <p className="eyebrow">How it helps</p>
-            <h2 className="h2" style={{ marginTop: "1rem" }}>
-              Areas of <em>focus</em>
+      <section className="physio-section physio-approach" aria-labelledby="physio-approach-title">
+        <MarginNoteSection note="The approach">
+          <Reveal>
+            <p className="eyebrow">The approach</p>
+            <h2 id="physio-approach-title">
+              Treating the cause, <em>not just the symptom</em>
             </h2>
-            <p className="lead" style={{ marginTop: "1.25rem" }}>
-              Some of the most common reasons people come to see Niamh.
-            </p>
           </Reveal>
-          <Stagger className="features" as="ul">
-            {conditions.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
-                <span className="idx" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <h3>{c.t}</h3>
-                <p>{c.p}</p>
-              </Item>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* Detailed list */}
-      <section className="section">
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
-              <p className="eyebrow">In detail</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
-                Common conditions <em>treated</em>
-              </h2>
-              <p className="lead" style={{ marginTop: "1.25rem" }}>
-                These are some of the conditions Niamh sees most often.
+          <div className="physio-approach-grid">
+            <Reveal className="physio-prose">
+              <p>
+                As a CORU-registered chartered physiotherapist, Niamh begins with a thorough assessment to understand
+                what's really driving your pain or restriction. From there, you'll get a clear, personalised treatment
+                plan that may combine hands-on therapy, targeted exercise and, where helpful, acupuncture or cupping.
+              </p>
+              <p>
+                A key part of every plan is preventing the problem coming back, leaving you stronger, more mobile and
+                better equipped for the future. Learning how the body and mind respond to pain and injury has also been
+                shown to speed up recovery.
               </p>
             </Reveal>
+            <Reveal delay={0.08}>
+              <PhotoPlaceholder
+                className="physio-photo-placeholder"
+                aspect="4 / 3"
+                caption="Studio photograph — coming soon"
+              />
+            </Reveal>
           </div>
-          <Reveal delay={0.1}>
-            <ul className="col-list" style={{ marginTop: 0 }}>
-              {list.map((l) => (
-                <li key={l}>{l}</li>
+        </MarginNoteSection>
+      </section>
+
+      <section className="physio-section physio-focus" aria-labelledby="physio-focus-title">
+        <MarginNoteSection note="Areas of focus">
+          <Reveal className="physio-section-heading">
+            <p className="eyebrow">How it helps</p>
+            <h2 id="physio-focus-title">
+              Areas of <em>focus</em>
+            </h2>
+            <p className="lead">Some of the most common reasons people come to see Niamh.</p>
+          </Reveal>
+          <div className="physio-ledger">
+            {areas.map(({ Icon, title, p }, index) => (
+              <Reveal as="article" className="physio-ledger-row" key={title} delay={index * 0.03}>
+                <span className="physio-ledger-number" aria-hidden="true">
+                  0{index + 1}
+                </span>
+                <span className="physio-ledger-icon" aria-hidden="true">
+                  <Icon size={25} />
+                </span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{p}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </MarginNoteSection>
+      </section>
+
+      <section className="physio-section physio-conditions" aria-labelledby="physio-conditions-title">
+        <MarginNoteSection note="Common conditions">
+          <Reveal className="physio-section-heading">
+            <p className="eyebrow">In detail</p>
+            <h2 id="physio-conditions-title">
+              Common conditions <em>treated</em>
+            </h2>
+            <p className="lead">These are some of the conditions Niamh sees most often.</p>
+          </Reveal>
+          <Reveal>
+            <ul className="physio-condition-list">
+              {physioConditions.map((condition) => (
+                <li key={condition}>{condition}</li>
               ))}
             </ul>
           </Reveal>
-        </div>
+        </MarginNoteSection>
       </section>
 
-      {/* What to expect */}
-      <section className="section on-dark" style={{ background: "var(--ink)" }}>
-        <div className="container">
-          <Reveal style={{ marginBottom: "3rem" }}>
-            <p className="eyebrow on-dark">Your visit</p>
-            <h2 className="h2" style={{ marginTop: "1rem" }}>
+      <section className="physio-section physio-visit" aria-labelledby="physio-visit-title">
+        <MarginNoteSection note="Your visit">
+          <Reveal className="physio-section-heading">
+            <p className="eyebrow">Your visit</p>
+            <h2 id="physio-visit-title">
               What to <em>expect</em>
             </h2>
           </Reveal>
-          <Stagger className="steps" as="ol">
-            {steps.map((s) => (
-              <Item as="li" className="step" key={s.n}>
-                <span className="num" aria-hidden="true">
-                  {s.n}
-                </span>
-                <h3>{s.t}</h3>
-                <p>{s.p}</p>
-                <span className="glow" aria-hidden="true" />
-              </Item>
+          <ol className="physio-visit-list">
+            {steps.map((step, index) => (
+              <Reveal as="li" className="physio-visit-row" key={step.number} delay={index * 0.05}>
+                <span aria-hidden="true">{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </Reveal>
             ))}
-          </Stagger>
-        </div>
+          </ol>
+        </MarginNoteSection>
       </section>
 
-      <CTA
+      <ClosingRoom
+        className="physio-closing"
         title={
           <>
-            Start your <em>recovery</em>
+            Start your <em>recovery</em>.
           </>
         }
         sub="Book a physiotherapy appointment in Kinsale or Carrigaline. Not sure if physio is right for you? Call and ask."

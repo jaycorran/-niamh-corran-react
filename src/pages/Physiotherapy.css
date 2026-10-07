@@ -1,0 +1,180 @@
+/* The Quiet Room — physiotherapy. */
+
+.physio-hero .typographic-page-hero-copy h1 {
+  max-width: 12ch;
+}
+
+.physio-river {
+  border-block: 1px solid var(--hairline);
+}
+
+.physio-section {
+  padding-block: var(--section-air);
+}
+
+.physio-approach,
+.physio-visit {
+  background: var(--cream);
+}
+
+.physio-focus {
+  background: var(--cream-sink);
+}
+
+.physio-conditions {
+  background: var(--cream-raise);
+}
+
+.physio-section-heading {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 44rem;
+}
+
+.physio-section h2 {
+  max-width: 17ch;
+  font-size: var(--type-h2);
+}
+
+.physio-section h2 em {
+  color: var(--forest-700);
+}
+
+.physio-section .lead,
+.physio-prose,
+.physio-ledger-row p,
+.physio-visit-row p {
+  color: var(--ink-soft);
+}
+
+.physio-approach-grid {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.physio-prose {
+  display: grid;
+  gap: 1.4rem;
+  max-width: 66ch;
+  font-size: 1.12rem;
+  line-height: 1.75;
+}
+
+.physio-approach-grid > * {
+  min-width: 0;
+}
+
+.physio-photo-placeholder {
+  width: min(100%, 35rem);
+  min-width: 0;
+}
+
+.physio-ledger {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.physio-ledger-row {
+  display: grid;
+  grid-template-columns: 3rem 2.75rem minmax(0, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+  align-items: start;
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.physio-ledger-number,
+.physio-visit-row > span {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  line-height: 1;
+  color: var(--forest-500);
+}
+
+.physio-ledger-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--forest-500);
+  color: var(--forest);
+}
+
+.physio-ledger-row h3,
+.physio-visit-row h3 {
+  margin-bottom: 0.65rem;
+  font-size: var(--type-h3);
+}
+
+.physio-ledger-row p,
+.physio-visit-row p {
+  max-width: 64ch;
+}
+
+.physio-condition-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.physio-condition-list li {
+  padding: 0.9rem 1rem 0.9rem 0;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+}
+
+.physio-condition-list li:nth-child(even) {
+  padding-left: 1rem;
+  border-left: 1px solid var(--hairline);
+}
+
+.physio-visit-list {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.physio-visit-row {
+  display: grid;
+  grid-template-columns: clamp(3rem, 8vw, 6rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.physio-closing {
+  border-bottom: 1px solid rgba(243, 238, 226, 0.18);
+}
+
+@media (min-width: 760px) {
+  .physio-approach-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(17rem, 0.95fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .physio-ledger-row {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+  }
+
+  .physio-ledger-icon {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: auto;
+  }
+
+  .physio-ledger-row > div {
+    grid-column: 2;
+  }
+
+  .physio-condition-list {
+    grid-template-columns: 1fr;
+  }
+
+  .physio-condition-list li:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

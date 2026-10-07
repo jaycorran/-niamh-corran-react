@@ -24,6 +24,13 @@ export const site = {
   phone: "087 251 7767",
   phoneHref: "tel:+353872517767",
   email: "niamhcorran1@gmail.com",
+  legalName: "Niamh Corran Physio Limited",
+  registeredAddress: {
+    line1: "Ballybogey",
+    line2: "Nohoval",
+    line3: "Co. Cork",
+    line4: "Ireland",
+  },
   locations,
   // Primary location kept as `address` for backward compatibility.
   address: locations[0],
@@ -58,6 +65,38 @@ export const site = {
     "Fully insured",
   ],
 };
+
+export function formatCompactHours(hours = site.hours) {
+  const grouped = hours.reduce((groups, hour) => {
+    const previous = groups.at(-1);
+    if (previous?.open === hour.open && previous.close === hour.close) {
+      previous.days.push(hour.day.slice(0, 3));
+      return groups;
+    }
+    return [...groups, { days: [hour.day.slice(0, 3)], open: hour.open, close: hour.close }];
+  }, []);
+
+  return grouped
+    .map(({ days, open, close }) => `${days.join(" & ")} ${open.replace(":00", "")}–${close.replace(":00", "")}`)
+    .join(" · ");
+}
+
+export function formatClosingHours(hours = site.hours) {
+  const grouped = hours.reduce((groups, hour) => {
+    const previous = groups.at(-1);
+    if (previous?.close === hour.close) {
+      previous.days.push(hour.day);
+      return groups;
+    }
+    return [...groups, { days: [hour.day], close: hour.close }];
+  }, []);
+  const formatClose = (time) => {
+    const hour = Number.parseInt(time, 10);
+    return `${hour > 12 ? hour - 12 : hour}${hour >= 12 ? "pm" : "am"}`;
+  };
+
+  return grouped.map(({ days, close }) => `${days.join(" and ")} until ${formatClose(close)}`).join(", ");
+}
 
 export const nav = [
   { to: "/physiotherapy", label: "Physiotherapy", num: "01" },

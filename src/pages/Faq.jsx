@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { PageHero, CTA } from "../components/Shared";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Reveal, EASE } from "../components/Reveal";
+import { ClosingRoom, MarginNoteSection, TypographicPageHero } from "../components/Shared";
+import "./Faq.css";
 
 const faqs = [
   {
@@ -32,32 +33,38 @@ const faqs = [
 
 function FAQ() {
   const [open, setOpen] = useState(0);
+  const reduceMotion = useReducedMotion();
+
   return (
-    <div className="faq">
-      {faqs.map((f, i) => {
-        const isOpen = open === i;
+    <div className="consultation-notes">
+      {faqs.map((faq, index) => {
+        const isOpen = open === index;
+        const answerId = `faq-${index}`;
         return (
-          <div className="faq-item" key={f.q}>
+          <div className="consultation-note" key={faq.q}>
             <button
-              className="faq-q"
+              className="consultation-question"
+              type="button"
               aria-expanded={isOpen}
-              aria-controls={`faq-${i}`}
-              onClick={() => setOpen(isOpen ? -1 : i)}
+              aria-controls={answerId}
+              onClick={() => setOpen(isOpen ? -1 : index)}
             >
-              {f.q}
-              <span className="plus" aria-hidden="true" />
+              <span>{faq.q}</span>
+              <span className="consultation-toggle" aria-hidden="true">
+                {isOpen ? "−" : "+"}
+              </span>
             </button>
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
-                  id={`faq-${i}`}
-                  className="faq-a"
-                  initial={{ height: 0, opacity: 0 }}
+                  id={answerId}
+                  className="consultation-answer"
+                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: EASE }}
+                  exit={reduceMotion ? { height: 0, opacity: 0 } : { height: 0, opacity: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.42, ease: EASE }}
                 >
-                  <p>{f.a}</p>
+                  <p>{faq.a}</p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -71,7 +78,8 @@ function FAQ() {
 export default function Faq() {
   return (
     <>
-      <PageHero
+      <TypographicPageHero
+        marginNote="Reassurance"
         eyebrow="FAQs"
         title={
           <>
@@ -81,23 +89,16 @@ export default function Faq() {
         lead="A few things people often ask before their first visit. If your question isn't here, just get in touch."
       />
 
-      <section className="section">
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
-              <p className="eyebrow">Reassurance</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
-                Before your <em>first visit</em>
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1}>
-            <FAQ />
-          </Reveal>
-        </div>
-      </section>
+      <MarginNoteSection as="section" note="Reassurance" className="faq-consultation">
+        <Reveal>
+          <h2>
+            Before your <em>first visit</em>
+          </h2>
+          <FAQ />
+        </Reveal>
+      </MarginNoteSection>
 
-      <CTA
+      <ClosingRoom
         title={
           <>
             Still have <em>questions?</em>

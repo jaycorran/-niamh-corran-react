@@ -1,0 +1,441 @@
+/* =====================================================================
+   Internal poster designer — DEV ONLY. Imported solely by Poster.jsx, so
+   it lives in the dev-only lazy chunk and never ships to dist/.
+   Styled after /tmp/poster-ref/Theme.png.
+   ===================================================================== */
+
+.poster-root {
+  --pearl: var(--cream-raise);
+  --glass: var(--sage-mist);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #26323a;
+  color: var(--ink);
+  z-index: 9999;
+}
+
+/* ---- Toolbar (never printed) ---------------------------------------- */
+.poster-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+  background: #0b1f27;
+  color: var(--pearl);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+}
+.poster-toolbar__brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.poster-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.poster-toolbar select {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(247, 244, 238, 0.3);
+  background: #12303b;
+  color: var(--pearl);
+}
+.poster-seg {
+  display: inline-flex;
+  border: 1px solid rgba(247, 244, 238, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.poster-seg button {
+  font: inherit;
+  padding: 0.3rem 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--pearl);
+  cursor: pointer;
+}
+.poster-seg button.is-active {
+  background: var(--glass);
+  color: var(--ink);
+  font-weight: 700;
+}
+.poster-toolbar__meta {
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}
+.poster-print {
+  margin-left: auto;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 0;
+  background: var(--clay-deep);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ---- Stage: fit the sheet to the viewport, keep exact ratio ---------- */
+.poster-stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  overflow: auto;
+}
+
+/* The poster keeps its ISO ratio via aspect-ratio (set inline). We cap by
+   both viewport dimensions so it fits without distortion in any orientation. */
+.poster {
+  /* Poster-only typefaces (Google Fonts, OFL) — override the site vars here. */
+  --serif: "Playfair Display Variable", Georgia, serif;
+  --sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+  --poster-serif: var(--serif);
+  /* Keep the cream wash, icon discs and contact card when printing. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  position: relative;
+  overflow: hidden;
+  background: var(--pearl);
+  color: var(--ink);
+  font-family: var(--sans);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  /* fit-to-viewport: whichever constraint binds first wins, ratio preserved */
+  width: min(92vw, calc((100dvh - 120px) * var(--sheet-ar, 0.707)));
+  max-height: calc(100dvh - 120px);
+  /* container so poster-internal sizing can scale with the sheet width */
+  container-type: inline-size;
+}
+.poster--portrait {
+  --sheet-ar: 0.7071;
+}
+.poster--landscape {
+  --sheet-ar: 1.4142;
+}
+
+/* ---- Background ------------------------------------------------------ */
+.poster__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Airy pearl wash over the left/content side, fading toward the figure. */
+.poster__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    var(--pearl) 0%,
+    var(--pearl) 30%,
+    rgba(247, 244, 238, 0.85) 42%,
+    rgba(247, 244, 238, 0.35) 55%,
+    rgba(247, 244, 238, 0) 68%
+  );
+}
+.poster--portrait .poster__scrim {
+  background: linear-gradient(
+    105deg,
+    var(--pearl) 0%,
+    var(--pearl) 46%,
+    rgba(247, 244, 238, 0.85) 58%,
+    rgba(247, 244, 238, 0.3) 70%,
+    rgba(247, 244, 238, 0) 80%
+  );
+}
+
+/* ---- Figure ----------------------------------------------------------- */
+.poster__figure {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+}
+/* Landscape: figure hugs the right edge at 1.5× sheet height, anchored to the
+   top so the head stays in frame; the poster's overflow clips the lower body. */
+.poster--landscape .poster__figure {
+  right: -9%;
+  top: 0;
+  bottom: auto;
+  height: 150%;
+  aspect-ratio: var(--figure-ar);
+}
+/* Portrait: figure sits on the footer band. --fig-h is its height (share of
+   the sheet); --fig-cut is how much of the image (top-down) stays visible
+   above the footer. The shirt hem sits at ~78% of the current EweTrans.png,
+   so 0.81 shows only a sliver below the waist. */
+.poster--portrait .poster__figure {
+  --fig-h: 84%;
+  --fig-cut: 0.81;
+  right: -18%;
+  bottom: calc(var(--footer-h) - (1 - var(--fig-cut)) * var(--fig-h));
+  height: var(--fig-h);
+  aspect-ratio: var(--figure-ar);
+}
+.poster__ewe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* ---- Content block --------------------------------------------------- */
+.poster__content {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  bottom: var(--footer-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  --hl-gap: 7cqw;
+  padding: 4cqw 4.5cqw 3cqw;
+  width: 56%;
+}
+.poster--portrait .poster__content {
+  /* Content column on the left, full height; figure occupies bottom-right. */
+  width: 60%;
+  justify-content: flex-start;
+  --hl-gap: 12cqw;
+  padding: 6cqw 5.5cqw 4.5cqw;
+}
+
+.poster__brand {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
+}
+.poster__logo {
+  width: 8cqw;
+  height: auto;
+}
+.poster--portrait .poster__logo {
+  width: 12cqw;
+}
+.poster__wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.poster__name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 4.6cqw;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.poster--portrait .poster__name {
+  font-size: 7cqw;
+  white-space: normal;
+}
+.poster__tag {
+  font-size: 1.2cqw;
+  letter-spacing: 0.26em;
+  color: var(--ink-3);
+  margin-top: 1cqw;
+  font-weight: 600;
+}
+.poster--portrait .poster__tag {
+  font-size: 2cqw;
+  white-space: pre-line;
+  line-height: 1.35;
+}
+
+.poster__headline {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 7cqw;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ink);
+}
+.poster--portrait .poster__headline {
+  font-size: 12cqw;
+  line-height: 0.96;
+}
+.poster__headline {
+  margin-top: var(--hl-gap);
+}
+/* Short coral rule under the headline — the one accent on the sheet. */
+.poster__rule {
+  display: block;
+  width: 9cqw;
+  height: 0.5cqw;
+  margin-top: 3cqw;
+  border-radius: 1cqw;
+  background: var(--clay-deep);
+}
+.poster--portrait .poster__rule {
+  width: 13cqw;
+  height: 0.7cqw;
+  margin-top: 5cqw;
+}
+/* Quiet trust line, pinned to the bottom of the content column. */
+.poster__creds {
+  margin: auto 0 0;
+  font-size: 1.1cqw;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  white-space: pre-line;
+  color: var(--ink-3);
+}
+.poster--portrait .poster__creds {
+  font-size: 1.7cqw;
+}
+.poster__headline em {
+  font-style: italic;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* ---- Footer band: phone, email, both clinics -------------------------- */
+.poster {
+  --footer-h: 21%;
+}
+.poster--portrait {
+  --footer-h: 17%;
+}
+.poster__footer {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-h);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1.1fr 2fr;
+  align-items: center;
+  gap: 3cqw;
+  padding: 0 4cqw;
+  background: var(--ink);
+  color: var(--pearl);
+}
+.poster__footer p {
+  margin: 0;
+}
+.poster__footer svg {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  color: var(--glass);
+}
+.poster__reach {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7cqw;
+}
+.poster__contact-lead {
+  font-size: 1.2cqw;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--glass);
+}
+.poster__phone {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  font-family: var(--serif);
+  font-size: 3.4cqw;
+  font-weight: 600;
+  line-height: 1.05;
+  font-variant-numeric: lining-nums;
+  white-space: nowrap;
+}
+.poster__email {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  font-size: 1.45cqw;
+  font-weight: 600;
+}
+.poster__addresses {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4cqw;
+  padding-left: 3cqw;
+  border-left: 0.12cqw solid rgba(159, 225, 203, 0.35);
+}
+.poster__address {
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
+  font-size: 1.2cqw;
+  line-height: 1.5;
+  color: rgba(247, 244, 238, 0.85);
+  white-space: nowrap;
+}
+.poster__address strong {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.35em;
+  font-size: 1.1em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pearl);
+}
+.poster--portrait .poster__footer {
+  grid-template-columns: 1fr 1.9fr;
+  gap: 3cqw;
+  padding: 0 5.5cqw;
+}
+.poster--portrait .poster__contact-lead {
+  font-size: 1.6cqw;
+}
+.poster--portrait .poster__phone {
+  font-size: 4.4cqw;
+}
+.poster--portrait .poster__email {
+  font-size: 1.9cqw;
+}
+.poster--portrait .poster__addresses {
+  gap: 2cqw;
+  padding-left: 3cqw;
+}
+.poster--portrait .poster__address {
+  font-size: 1.45cqw;
+}
+
+/* ---- Print: real size, no toolbar, no fit-scaling ------------------- */
+@media print {
+  .poster-root {
+    position: static;
+    display: block;
+    background: #fff;
+  }
+  .poster-toolbar {
+    display: none !important;
+  }
+  .poster-stage {
+    padding: 0;
+    overflow: visible;
+    display: block;
+  }
+  .poster {
+    width: 100% !important;
+    max-height: none !important;
+    height: 100vh;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+}
+
+/* Portrait headline: one phrase per line ("Get back / to what / you love."). */
+.poster--portrait .poster__hl-line {
+  display: block;
+}

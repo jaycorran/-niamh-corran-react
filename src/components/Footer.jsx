@@ -4,7 +4,7 @@ import { nav, site } from "../data/site";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="footer">
+    <footer className="footer quiet-footer">
       <div className="container footer-grid">
         <div>
           <img className="footer-logo" src="/1A-reverse.svg" alt="Niamh Corran Physiotherapy & Acupuncture" />
@@ -13,7 +13,7 @@ export function Footer() {
           </p>
           <div className="accreds" aria-label="Accreditations">
             <a
-              className="accred accred-logo"
+              className="accred accred-logo coru-chip"
               href="https://www.coru.ie/check-the-register/"
               target="_blank"
               rel="noopener noreferrer"
@@ -27,62 +27,80 @@ export function Footer() {
                 loading="lazy"
               />
             </a>
-            <span className="accred accred-logo accred-logo-plain">
-              <img
-                src="/iscp-logo-white.png"
-                alt="ISCP — Chartered Physiotherapist member"
-                loading="lazy"
-              />
+            <span className="accred accred-logo accred-logo-plain iscp-mark">
+              <img src="/iscp-logo-white.png" alt="ISCP — Chartered Physiotherapist member" loading="lazy" />
             </span>
           </div>
         </div>
 
-        <div>
-          <h4>Explore</h4>
+        <nav aria-label="Footer">
+          <h2>Explore</h2>
           <ul>
-            {nav.map((n) => (
-              <li key={n.to}>
-                <Link to={n.to}>{n.label}</Link>
+            {nav.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to}>{item.label}</Link>
               </li>
             ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2>Hours</h2>
+          <ul>
+            {site.hours.map((hours) => (
+              <li key={hours.day}>
+                {hours.day} · {hours.open} – {hours.close}
+              </li>
+            ))}
+            <li className="footer-note">Other days by arrangement</li>
           </ul>
         </div>
 
         <div>
-          <h4>Hours</h4>
-          <ul>
-            {site.hours.map((h) => (
-              <li key={h.day}>
-                {h.day} · {h.open} – {h.close}
+          <h2>Contact</h2>
+          <address>
+            <ul>
+              {site.locations.map((location) => (
+                <li key={location.name}>
+                  {location.line1}, {location.line2}, {location.line3}, {location.line4}
+                </li>
+              ))}
+              <li>
+                <a href={site.phoneHref}>{site.phone}</a>
               </li>
-            ))}
-            <li style={{ opacity: 0.6, fontSize: "0.85rem" }}>Other days by arrangement</li>
-          </ul>
+              <li>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+            </ul>
+          </address>
         </div>
 
-        <div>
-          <h4>Contact</h4>
+        <nav aria-label="Legal">
+          <h2>Legal</h2>
           <ul>
-            {site.locations.map((loc) => (
-              <li key={loc.name}>
-                {loc.line1}, {loc.line2}, {loc.line3}, {loc.line4}
-              </li>
-            ))}
             <li>
-              <a href={site.phoneHref}>{site.phone}</a>
+              <Link to="/privacy">Privacy Policy</Link>
             </li>
             <li>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
+              <Link to="/cookies">Cookie Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms">Terms & Disclaimer</Link>
+            </li>
+            <li>
+              <Link to="/accessibility">Accessibility</Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
 
       <div className="container footer-bottom">
-        <p>
-          © {year} {site.name} {site.tagline}
-        </p>
-        <p>Kinsale & Carrigaline, Co. Cork</p>
+        <div>
+          <p>
+            © {year} {site.name} {site.tagline}
+          </p>
+          <p>Kinsale & Carrigaline, Co. Cork</p>
+        </div>
       </div>
     </footer>
   );

@@ -1,8 +1,9 @@
-import { PageHero, CTA } from "../components/Shared";
-import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Button } from "../components/Button";
 import { Check } from "../components/Icons";
-import { site } from "../data/site";
+import { Reveal } from "../components/Reveal";
+import { ClosingRoom, MarginNoteSection, TypographicPageHero } from "../components/Shared";
+import { formatClosingHours, site } from "../data/site";
+import "./Fees.css";
 
 const notes = [
   `Receipts provided for private health insurance (${site.insurers.join(", ")}).`,
@@ -14,8 +15,8 @@ const notes = [
 export default function Fees() {
   return (
     <>
-      <PageHero
-        eyebrow="Fees"
+      <TypographicPageHero
+        marginNote="Fees"
         title={
           <>
             Simple, <em>transparent</em> pricing
@@ -24,67 +25,56 @@ export default function Fees() {
         lead="Every session includes time to talk, treat and plan, and receipts are provided for private health insurance."
       />
 
-      <section className="section">
-        <div className="container">
-          <Stagger className="pricing">
-            {site.fees.map((f) => (
-              <Item as="article" className={`price-card ${f.featured ? "featured" : ""}`} key={f.name}>
-                {f.featured && <span className="badge">Most common</span>}
-                <p className="eyebrow" style={{ color: f.featured ? "var(--glass)" : undefined }}>
-                  {f.duration}
-                </p>
-                <h3>{f.name}</h3>
-                <p className="price">
-                  €{f.price}
-                  <small>/ {f.duration}</small>
-                </p>
-                <ul className="ticks">
-                  {f.includes.map((i) => (
-                    <li key={i}>
-                      <Check size={16} />
-                      {i}
-                    </li>
-                  ))}
-                </ul>
-                <Button to="/booking" variant={f.featured ? "coral" : ""} block>
-                  Book now
-                </Button>
-              </Item>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
-              <p className="eyebrow">Good to know</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
-                The <em>small print</em>
-              </h2>
+      <section className="fees-pricing-section">
+        <div className="container fees-pricing">
+          {site.fees.map((fee, index) => (
+            <Reveal as="article" className="fee-panel" delay={index * 0.08} key={fee.name}>
+              {fee.featured && <span className="fee-tag">Most common</span>}
+              <p className="eyebrow">{fee.duration}</p>
+              <h2>{fee.name}</h2>
+              <p className="fee-price">
+                €{fee.price}
+                <small>/ {fee.duration}</small>
+              </p>
+              <ul className="fee-includes">
+                {fee.includes.map((item) => (
+                  <li key={item}>
+                    <Check size={17} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button to="/booking" block>
+                Book now
+              </Button>
             </Reveal>
-          </div>
-          <Reveal delay={0.1}>
-            <ul className="ticks" style={{ fontSize: "1.1rem", gap: "1.25rem" }}>
-              {notes.map((n) => (
-                <li key={n}>
-                  <Check size={18} />
-                  {n}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          ))}
         </div>
       </section>
 
-      <CTA
+      <MarginNoteSection as="section" note="Good to know" className="fees-small-print">
+        <Reveal>
+          <h2>
+            The <em>small print</em>
+          </h2>
+          <ul className="fees-ledger">
+            {notes.map((note) => (
+              <li key={note}>
+                <Check size={18} />
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </MarginNoteSection>
+
+      <ClosingRoom
         title={
           <>
             Ready to <em>book?</em>
           </>
         }
-        sub="Choose a time that suits you in Kinsale or Carrigaline. Tuesday and Wednesday until 9pm, Friday until 5pm."
+        sub={`Choose a time that suits you in Kinsale or Carrigaline. ${formatClosingHours()}.`}
       />
     </>
   );

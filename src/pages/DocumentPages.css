@@ -1,0 +1,88 @@
+.document-page-hero {
+  padding-bottom: clamp(3.5rem, 7vw, 6rem) !important;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.document-date {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.document-page.document-layout {
+  background: var(--cream);
+}
+
+.document-page .document-prose {
+  max-width: 66ch;
+  gap: 1.25rem;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.document-page .document-prose h2 {
+  margin-top: clamp(1.75rem, 5vw, 3.5rem);
+  scroll-margin-top: 7rem;
+  font-size: clamp(1.55rem, 2.8vw, 2.25rem);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.document-page .document-prose h2:first-child {
+  margin-top: 0;
+}
+
+.document-page .document-prose ul {
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.document-page .document-prose li {
+  padding-left: 0.25rem;
+}
+
+.document-page .document-prose a:not(.quiet-link) {
+  color: var(--forest);
+  text-decoration: underline;
+  text-decoration-color: var(--clay);
+  text-underline-offset: 0.2em;
+}
+
+.document-page .legal-gaps-callout {
+  margin-top: 2.25rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: var(--sage-mist);
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  color: var(--ink);
+}
+
+.document-page .legal-gaps-callout p + p {
+  margin-top: 0.65rem;
+  color: var(--ink-soft);
+}
+
+.document-back-link {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.document-page .document-toc a {
+  display: inline-flex;
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 979px) {
+  .document-page .document-toc {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+}

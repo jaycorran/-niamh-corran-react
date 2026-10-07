@@ -1,95 +1,115 @@
-import { PageHero, CTA, Marquee } from "../components/Shared";
-import { Reveal, Stagger, Item } from "../components/Reveal";
+import {
+  ClosingRoom,
+  MarginNoteSection,
+  PhotoWindow,
+  QuietRiver,
+  TypographicPageHero,
+} from "../components/Shared";
+import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
+import { Reveal } from "../components/Reveal";
 import { Lotus, Moon, Flower, Body, Leaf, Pulse, Brain } from "../components/Icons";
 import { acupunctureAreas, acupunctureConditions } from "../data/site";
+import "./Acupuncture.css";
 
-// Titles come from acupunctureAreas (shared with the Home marquee); icon + description live here.
-const focus = [
-  { Icon: Lotus, p: "Calm a busy mind and ease tension held in the body." },
-  { Icon: Moon, p: "Settle the nervous system for deeper, more restful sleep." },
+const focusAreas = [
+  { Icon: Lotus, text: "Calm a busy mind and ease tension held in the body." },
+  { Icon: Moon, text: "Settle the nervous system for deeper, more restful sleep." },
   {
     Icon: Flower,
-    p: "Support for menstrual, menopausal and peri-menopausal concerns, fertility, and pregnancy-related issues such as nausea, tiredness and pelvic pain.",
+    text: "Support for menstrual, menopausal and peri-menopausal concerns, fertility, and pregnancy-related issues such as nausea, tiredness and pelvic pain.",
   },
-  { Icon: Body, p: "Relief for arthritic, muscular, joint and nerve-related pain." },
-  { Icon: Leaf, p: "Ease the frequency and intensity of headaches and migraine." },
-  {
-    Icon: Pulse,
-    p: "Lowers inflammation, eases muscle tension and reduces breathlessness.",
-  },
+  { Icon: Body, text: "Relief for arthritic, muscular, joint and nerve-related pain." },
+  { Icon: Leaf, text: "Ease the frequency and intensity of headaches and migraine." },
+  { Icon: Pulse, text: "Lowers inflammation, eases muscle tension and reduces breathlessness." },
   {
     Icon: Brain,
-    p: "Help with conditions such as Bell's palsy, IBS, dizziness, and cardiovascular health including hypertension.",
+    text: "Help with conditions such as Bell's palsy, IBS, dizziness, and cardiovascular health including hypertension.",
   },
-].map((c, i) => ({ ...c, t: acupunctureAreas[i] }));
-
-const uses = acupunctureConditions;
+].map((area, index) => ({ ...area, title: acupunctureAreas[index] }));
 
 const cuppingBenefits = [
   {
     Icon: Body,
-    t: "Muscle relaxation & tension release",
-    p: "A kind of 'reverse massage' (myofascial decompression): rather than pressing down, the suction lifts the skin and muscle upward to loosen tight knots and soften scar tissue. Helpful for muscle tension, scar tissue and carpal tunnel syndrome.",
+    title: "Muscle relaxation & tension release",
+    text: "A kind of 'reverse massage' (myofascial decompression): rather than pressing down, the suction lifts the skin and muscle upward to loosen tight knots and soften scar tissue. Helpful for muscle tension, scar tissue and carpal tunnel syndrome.",
   },
   {
     Icon: Pulse,
-    t: "Targeted pain management",
-    p: "Evidence suggests cupping may temporarily ease chronic discomfort, particularly lower back and neck pain, knee osteoarthritis and shoulder tightness, and migraines and tension headaches.",
+    title: "Targeted pain management",
+    text: "Evidence suggests cupping may temporarily ease chronic discomfort, particularly lower back and neck pain, knee osteoarthritis and shoulder tightness, and migraines and tension headaches.",
   },
   {
     Icon: Leaf,
-    t: "Enhanced blood flow",
-    p: "Drawing blood to the treated area is believed to jump-start the body's natural healing, flooding the tissue with nutrients and oxygen while flushing out metabolic waste.",
+    title: "Enhanced blood flow",
+    text: "Drawing blood to the treated area is believed to jump-start the body's natural healing, flooding the tissue with nutrients and oxygen while flushing out metabolic waste.",
   },
   {
     Icon: Lotus,
-    t: "Systemic relaxation",
-    p: "Many people feel a deep sense of comfort and full-body relaxation, which researchers suggest may come from an increased release of the body's own natural painkillers (endogenous opioids).",
+    title: "Systemic relaxation",
+    text: "Many people feel a deep sense of comfort and full-body relaxation, which researchers suggest may come from an increased release of the body's own natural painkillers (endogenous opioids).",
   },
 ];
 
 const electroBenefits = [
   {
     Icon: Pulse,
-    t: "Stronger stimulation",
-    p: "Continuous, consistent electrical pulses in place of manual needle manipulation.",
+    title: "Stronger stimulation",
+    text: "Continuous, consistent electrical pulses in place of manual needle manipulation.",
   },
   {
     Icon: Leaf,
-    t: "Faster relief",
-    p: "Activates acupuncture points more quickly, which can shorten treatment times.",
+    title: "Faster relief",
+    text: "Activates acupuncture points more quickly, which can shorten treatment times.",
   },
   {
     Icon: Body,
-    t: "Broader coverage",
-    p: "Effectively stimulates larger areas of the body by linking paired needles.",
+    title: "Broader coverage",
+    text: "Effectively stimulates larger areas of the body by linking paired needles.",
   },
   {
     Icon: Brain,
-    t: "Biochemical response",
-    p: "Triggers the release of endorphins (natural painkillers) and helps reduce inflammation.",
+    title: "Biochemical response",
+    text: "Triggers the release of endorphins (natural painkillers) and helps reduce inflammation.",
   },
 ];
 
 const steps = [
   {
-    n: "1",
-    t: "Consultation",
-    p: "A gentle conversation about your health, history and what you'd like to work on.",
+    number: "01",
+    title: "Consultation",
+    text: "A gentle conversation about your health, history and what you'd like to work on.",
   },
   {
-    n: "2",
-    t: "Treatment",
-    p: "Fine, sterile, single-use needles placed at carefully chosen points while you rest.",
+    number: "02",
+    title: "Treatment",
+    text: "Fine, sterile, single-use needles placed at carefully chosen points while you rest.",
   },
-  { n: "3", t: "Aftercare", p: "Simple, natural steps to support your wellbeing between sessions." },
+  { number: "03", title: "Aftercare", text: "Simple, natural steps to support your wellbeing between sessions." },
 ];
+
+function BenefitLedger({ benefits, label }) {
+  return (
+    <div className="acupuncture-benefit-ledger" aria-label={label}>
+      {benefits.map(({ Icon, title, text }, index) => (
+        <Reveal as="article" className="acupuncture-benefit-row" key={title} delay={index * 0.04}>
+          <span aria-hidden="true">0{index + 1}</span>
+          <Icon size={23} />
+          <div>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
 
 export default function Acupuncture() {
   return (
     <>
-      <PageHero
-        eyebrow="Acupuncture"
+      <TypographicPageHero
+        className="acupuncture-hero"
+        marginNote="Kinsale & Carrigaline"
         title={
           <>
             Traditional <em>acupuncture</em>
@@ -98,110 +118,124 @@ export default function Acupuncture() {
         lead="A gentle, natural therapy that supports the body's own ability to heal, ease pain and restore balance."
       />
 
-      <Marquee items={acupunctureConditions} />
+      <QuietRiver className="acupuncture-river" items={acupunctureConditions} />
 
-      {/* What it is */}
-      <section className="section">
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
+      <section className="acupuncture-section acupuncture-practice" aria-labelledby="acupuncture-practice-title">
+        <MarginNoteSection note="The practice">
+          <div className="acupuncture-practice-grid">
+            <Reveal className="acupuncture-practice-copy">
               <p className="eyebrow">The practice</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
+              <h2 id="acupuncture-practice-title">
                 What is <em>acupuncture?</em>
               </h2>
-              <p className="statement" style={{ marginTop: "1.5rem", fontSize: "clamp(1.3rem, 2vw, 1.8rem)" }}>
+              <p className="acupuncture-statement">
                 An ancient therapy that helps the body heal itself and return to balance.
               </p>
+              <div className="acupuncture-prose">
+                <p>
+                  Acupuncture has been practised for thousands of years as part of Traditional Chinese Medicine. Fine,
+                  sterile, single-use needles are placed at specific points on the body. In traditional terms these
+                  points lie along meridians, pathways along which energy, or "Qi", flows; keeping that flow free
+                  supports good health, while blockages can contribute to illness.
+                </p>
+                <h3>How it works</h3>
+                <p>
+                  Modern research offers a complementary explanation. Inserting a needle creates a tiny, controlled
+                  stimulus that can kick-start the body's natural healing response, prompt the release of the body's
+                  own pain-relieving chemicals (endorphins), and help dampen the pain signals travelling to the brain.
+                  Acupuncture has both a local effect, where the needles are placed, and a wider effect across the body,
+                  which is why it can be helpful for a broad range of conditions.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <PhotoWindow
+                className="acupuncture-photo"
+                imageClassName="acupuncture-needle-photo"
+                src="/images/acupuncture-needle-placement-back-1600.webp"
+                srcSet="/images/acupuncture-needle-placement-back-800.webp 800w, /images/acupuncture-needle-placement-back-1600.webp 1600w"
+                sizes="(min-width: 980px) 38vw, (min-width: 760px) 44vw, 100vw"
+                alt="Niamh placing fine acupuncture needles along a patient's lower back"
+                aspect="4 / 3"
+                loading="eager"
+              />
             </Reveal>
           </div>
-          <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
-            <p>
-              Acupuncture has been practised for thousands of years as part of Traditional Chinese Medicine. Fine,
-              sterile, single-use needles are placed at specific points on the body. In traditional terms these points
-              lie along meridians, pathways along which energy, or "Qi", flows; keeping that flow free supports good
-              health, while blockages can contribute to illness.
-            </p>
-            <h3 className="h3" style={{ color: "var(--ink)", marginTop: "1rem" }}>
-              How it works
-            </h3>
-            <p>
-              Modern research offers a complementary explanation. Inserting a needle creates a tiny, controlled
-              stimulus that can kick-start the body's natural healing response, prompt the release of the body's own
-              pain-relieving chemicals (endorphins), and help dampen the pain signals travelling to the brain.
-              Acupuncture has both a local effect, where the needles are placed, and a wider effect across the body,
-              which is why it can be helpful for a broad range of conditions.
-            </p>
-          </Reveal>
-        </div>
+        </MarginNoteSection>
       </section>
 
-      {/* Focus areas */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
-        <div className="container">
-          <Reveal style={{ marginBottom: "3rem", maxWidth: "40rem" }}>
+      <section className="acupuncture-section acupuncture-focus" aria-labelledby="acupuncture-focus-title">
+        <MarginNoteSection note="Areas of focus">
+          <Reveal className="acupuncture-section-heading">
             <p className="eyebrow">How it helps</p>
-            <h2 className="h2" style={{ marginTop: "1rem" }}>
+            <h2 id="acupuncture-focus-title">
               Areas of <em>focus</em>
             </h2>
-            <p className="lead" style={{ marginTop: "1.25rem" }}>
+            <p className="lead">
               Acupuncture may support a wide range of concerns. These are some Niamh works with most often.
             </p>
           </Reveal>
-          <Stagger className="features" as="ul">
-            {focus.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
-                <span className="idx" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <h3>{c.t}</h3>
-                <p>{c.p}</p>
-              </Item>
+          <div className="acupuncture-focus-ledger">
+            {focusAreas.map(({ Icon, title, text }, index) => (
+              <Reveal as="article" className="acupuncture-focus-row" key={title} delay={index * 0.03}>
+                <span aria-hidden="true">0{index + 1}</span>
+                <Icon size={25} />
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </Reveal>
             ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* Uses */}
-      <section className="section">
-        <div className="container split">
-          <div className="sticky">
-            <Reveal>
-              <p className="eyebrow">Uses</p>
-              <h2 className="h2" style={{ marginTop: "1rem" }}>
-                What acupuncture <em>can help with</em>
-              </h2>
-              <p className="lead" style={{ marginTop: "1.25rem" }}>
-                Acupuncture is used around the world to provide safe, effective relief for many conditions. Niamh
-                commonly uses it to help with:
-              </p>
-            </Reveal>
           </div>
-          <Reveal delay={0.1}>
-            <ul className="col-list" style={{ marginTop: 0 }}>
-              {uses.map((l) => (
-                <li key={l}>{l}</li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
+        </MarginNoteSection>
       </section>
 
-      {/* Cupping therapy */}
-      <section className="section" style={{ background: "var(--pearl-2)" }}>
-        <div className="container">
-          <div className="split">
-            <div className="sticky">
-              <Reveal>
-                <p className="eyebrow">Also offered</p>
-                <h2 className="h2" style={{ marginTop: "1rem" }}>
-                  Cupping <em>therapy</em>
+      <section className="acupuncture-section acupuncture-uses" aria-labelledby="acupuncture-uses-title">
+        <MarginNoteSection note="Uses">
+          <div className="acupuncture-uses-grid">
+            <div className="acupuncture-uses-copy">
+              <Reveal className="acupuncture-section-heading">
+                <p className="eyebrow">Uses</p>
+                <h2 id="acupuncture-uses-title">
+                  What acupuncture <em>can help with</em>
                 </h2>
-                <p className="lead" style={{ marginTop: "1.25rem" }}>
-                  An ancient therapy, used on its own or combined with acupuncture.
+                <p className="lead">
+                  Acupuncture is used around the world to provide safe, effective relief for many conditions. Niamh
+                  commonly uses it to help with:
                 </p>
               </Reveal>
+              <Reveal>
+                <ul className="acupuncture-use-list">
+                  {acupunctureConditions.map((condition) => (
+                    <li key={condition}>{condition}</li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
-            <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
+            <Reveal delay={0.08}>
+              <PhotoWindow
+                className="acupuncture-photo acupuncture-uses-photo"
+                imageClassName="acupuncture-uses-photo-img"
+                src="/images/acupuncture-two-hand-technique-1600.webp"
+                srcSet="/images/acupuncture-two-hand-technique-800.webp 800w, /images/acupuncture-two-hand-technique-1600.webp 1600w"
+                sizes="(min-width: 980px) 32vw, (min-width: 760px) 40vw, 100vw"
+                alt="Niamh using both hands to place acupuncture needles along a patient's upper back"
+                aspect="4 / 3"
+              />
+            </Reveal>
+          </div>
+        </MarginNoteSection>
+      </section>
+
+      <section className="acupuncture-deep-room" aria-labelledby="cupping-title">
+        <MarginNoteSection note="Also offered">
+          <div className="acupuncture-deep-intro">
+            <Reveal className="acupuncture-deep-copy">
+              <p className="eyebrow">Also offered</p>
+              <h2 id="cupping-title">
+                Cupping <em>therapy</em>
+              </h2>
+              <p className="lead">An ancient therapy, used on its own or combined with acupuncture.</p>
               <p>
                 Cupping is an ancient practice in which specialised cups are placed on the skin to create a gentle
                 suction. The vacuum draws the skin and the superficial muscle layer upward into the cup, which is
@@ -210,86 +244,74 @@ export default function Acupuncture() {
                 acupuncture within a single session.
               </p>
             </Reveal>
+            <Reveal delay={0.08}>
+              <PhotoPlaceholder
+                className="acupuncture-cupping-placeholder"
+                aspect="4 / 3"
+                caption="Cupping photo coming soon"
+              />
+            </Reveal>
           </div>
-          <Stagger className="features" as="ul" style={{ marginTop: "3rem" }}>
-            {cuppingBenefits.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
-                <span className="idx" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <h3>{c.t}</h3>
-                <p>{c.p}</p>
-              </Item>
-            ))}
-          </Stagger>
-        </div>
+          <BenefitLedger benefits={cuppingBenefits} label="Cupping therapy" />
+        </MarginNoteSection>
       </section>
 
-      {/* Electro-acupuncture */}
-      <section className="section">
-        <div className="container">
-          <div className="split">
-            <div className="sticky">
-              <Reveal>
-                <p className="eyebrow">Also offered</p>
-                <h2 className="h2" style={{ marginTop: "1rem" }}>
-                  Electro-<em>acupuncture</em>
-                </h2>
-                <p className="lead" style={{ marginTop: "1.25rem" }}>
-                  A modern form of acupuncture that adds gentle electrical stimulation.
-                </p>
-              </Reveal>
-            </div>
-            <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
+      <section className="acupuncture-deep-room acupuncture-deep-room-alt" aria-labelledby="electro-title">
+        <MarginNoteSection note="Also offered">
+          <div className="acupuncture-deep-intro">
+            <Reveal className="acupuncture-deep-copy">
+              <p className="eyebrow">Also offered</p>
+              <h2 id="electro-title">
+                Electro-<em>acupuncture</em>
+              </h2>
+              <p className="lead">A modern form of acupuncture that adds gentle electrical stimulation.</p>
               <p>
                 In electro-acupuncture, a small, adjustable electrical current is passed between pairs of acupuncture
                 needles to enhance and sustain the therapeutic stimulation. It's commonly used for pain relief such as
                 headaches, migraines and back pain.
               </p>
             </Reveal>
+            <Reveal delay={0.08}>
+              <PhotoWindow
+                className="acupuncture-photo acupuncture-photo-dark"
+                imageClassName="acupuncture-session-photo"
+                src="/images/acupuncture-session-overview-1600.webp"
+                srcSet="/images/acupuncture-session-overview-800.webp 800w, /images/acupuncture-session-overview-1600.webp 1600w"
+                sizes="(min-width: 980px) 38vw, (min-width: 760px) 44vw, 100vw"
+                alt="Overhead view of an acupuncture session showing needles placed along a patient's back"
+                aspect="4 / 3"
+              />
+            </Reveal>
           </div>
-          <Stagger className="features" as="ul" style={{ marginTop: "3rem" }}>
-            {electroBenefits.map((c, i) => (
-              <Item as="li" className="feature" key={c.t}>
-                <span className="idx" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <h3>{c.t}</h3>
-                <p>{c.p}</p>
-              </Item>
-            ))}
-          </Stagger>
-        </div>
+          <BenefitLedger benefits={electroBenefits} label="Electro-acupuncture" />
+        </MarginNoteSection>
       </section>
 
-      {/* What to expect */}
-      <section className="section on-dark" style={{ background: "var(--ink)" }}>
-        <div className="container">
-          <Reveal style={{ marginBottom: "3rem" }}>
-            <p className="eyebrow on-dark">Your visit</p>
-            <h2 className="h2" style={{ marginTop: "1rem" }}>
+      <section className="acupuncture-section acupuncture-visit" aria-labelledby="acupuncture-visit-title">
+        <MarginNoteSection note="Your visit">
+          <Reveal className="acupuncture-section-heading">
+            <p className="eyebrow">Your visit</p>
+            <h2 id="acupuncture-visit-title">
               What to <em>expect</em>
             </h2>
-            <p className="lead" style={{ marginTop: "1.25rem" }}>
-              Every visit is unhurried and centred on you.
-            </p>
+            <p className="lead">Every visit is unhurried and centred on you.</p>
           </Reveal>
-          <Stagger className="steps" as="ol">
-            {steps.map((s) => (
-              <Item as="li" className="step" key={s.n}>
-                <span className="num" aria-hidden="true">
-                  {s.n}
-                </span>
-                <h3>{s.t}</h3>
-                <p>{s.p}</p>
-                <span className="glow" aria-hidden="true" />
-              </Item>
+          <ol className="acupuncture-visit-list">
+            {steps.map((step, index) => (
+              <Reveal as="li" className="acupuncture-visit-row" key={step.number} delay={index * 0.05}>
+                <span aria-hidden="true">{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </Reveal>
             ))}
-          </Stagger>
-        </div>
+          </ol>
+        </MarginNoteSection>
       </section>
 
-      <CTA
+      <ClosingRoom
+        className="acupuncture-closing"
         title={
           <>
             Restore your <em>balance</em>
