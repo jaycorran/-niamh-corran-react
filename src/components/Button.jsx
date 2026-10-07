@@ -2,16 +2,18 @@ import { Link } from "react-router-dom";
 import { Arrow } from "./Icons";
 
 /**
- * Button: pill button with hover fill + rotating arrow.
- * variant: "" | "coral" | "glass" | "ghost"
+ * Quiet Room pill button.
+ * variant: "primary" | "glass" | "ghost"
  * to -> internal Link, href -> external anchor, else <button>
  */
-export function Button({ children, to, href, variant = "", block = false, type = "button", className = "", ...rest }) {
-  const cls = ["btn", variant, block ? "block" : "", className].filter(Boolean).join(" ");
+export function Button({ children, to, href, variant = "primary", block = false, type = "button", className = "", ...rest }) {
+  const cls = ["btn", "button-system", variant || "primary", block ? "block" : "", className]
+    .filter(Boolean)
+    .join(" ");
   const inner = (
     <>
-      <span>{children}</span>
-      <span className="icon">
+      <span className="btn-label">{children}</span>
+      <span className="icon btn-arrow">
         <Arrow size={14} />
       </span>
     </>
@@ -35,21 +37,22 @@ export function Button({ children, to, href, variant = "", block = false, type =
   );
 }
 
-export function LinkArrow({ children, to, href, dir = "right", ...rest }) {
+export function LinkArrow({ children, to, href, dir = "right", className = "", ...rest }) {
+  const cls = ["link-arrow", "quiet-link", className].filter(Boolean).join(" ");
   const inner = (
     <>
-      {children}
+      <span>{children}</span>
       <Arrow size={14} dir={dir} />
     </>
   );
   if (to)
     return (
-      <Link to={to} className="link-arrow" {...rest}>
+      <Link to={to} className={cls} {...rest}>
         {inner}
       </Link>
     );
   return (
-    <a href={href} className="link-arrow" {...rest}>
+    <a href={href} className={cls} {...rest}>
       {inner}
     </a>
   );

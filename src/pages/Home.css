@@ -1,0 +1,696 @@
+/* The Quiet Room homepage — five calm, conversion-first movements. */
+
+/* Movement I: Come in. */
+.page-hero.typographic-page-hero.home-welcome {
+  min-height: min(100svh, 58rem);
+  padding-top: clamp(7rem, 11vw, 9rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  display: flex;
+  align-items: center;
+}
+
+.home-welcome .typographic-page-hero-inner {
+  align-items: start;
+}
+
+.home-welcome .typographic-page-hero-copy h1 {
+  max-width: none;
+  margin-top: clamp(0.8rem, 2vw, 1.25rem);
+  font-size: var(--type-welcome);
+  line-height: 1.02;
+}
+
+.home-welcome-title,
+.home-welcome-title > span {
+  display: block;
+}
+
+.home-welcome .typographic-page-hero-aside {
+  width: 100%;
+  gap: 1rem;
+}
+
+.home-welcome .lead {
+  max-width: 54ch;
+  color: var(--ink-soft);
+}
+
+.home-welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.25rem;
+}
+
+.home-welcome-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.home-welcome-contact a {
+  display: inline-flex;
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  color: var(--forest);
+  border-bottom: 1px solid var(--clay);
+}
+
+.home-welcome-status {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.home-welcome-photo {
+  width: min(100%, 25rem);
+  justify-self: end;
+}
+
+.home-welcome-photo figcaption {
+  width: fit-content;
+  margin: -1.9rem 0 0 1.7rem;
+  padding: 0.45rem 0.7rem;
+  position: relative;
+  background: var(--cream-raise);
+  border: 1px solid var(--hairline);
+  color: var(--ink-soft);
+}
+
+.home-welcome-horizon {
+  margin-top: -1px;
+}
+
+@media (min-width: 760px) {
+  .home-welcome .typographic-page-hero-aside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .home-welcome .lead,
+  .home-welcome-actions,
+  .home-welcome-contact {
+    grid-column: 1;
+  }
+
+  .home-welcome-photo {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}
+
+@media (min-width: 980px) {
+  .home-welcome .typographic-page-hero-copy {
+    grid-column: 3 / span 7;
+  }
+
+  .home-welcome .typographic-page-hero-aside {
+    grid-column: 3 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(19rem, 24rem);
+  }
+}
+
+@media (max-width: 759px) {
+  .page-hero.typographic-page-hero.home-welcome {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding-top: clamp(6.5rem, 25vw, 7.75rem);
+  }
+
+  .home-welcome .typographic-page-hero-inner {
+    gap: 1rem;
+  }
+
+  .home-welcome .typographic-page-hero-aside {
+    display: grid;
+    row-gap: 0.75rem;
+  }
+
+  .home-welcome .lead {
+    order: 1;
+  }
+
+  .home-welcome-actions {
+    display: contents;
+  }
+
+  .home-welcome-actions .btn {
+    order: 2;
+    justify-self: start;
+  }
+
+  .home-welcome-contact {
+    order: 3;
+  }
+
+  .home-welcome-actions .link-arrow {
+    order: 4;
+    justify-self: start;
+  }
+
+  .home-welcome-photo {
+    order: 5;
+    width: 100%;
+    margin-top: 0.5rem;
+    --photo-aspect: 4 / 3 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-welcome .typographic-page-hero-copy h1 {
+    font-size: clamp(2.35rem, 12vw, 3rem);
+  }
+
+  .home-welcome .lead {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .home-welcome-actions .btn {
+    min-height: 48px;
+    padding: 0.78rem 1.15rem;
+  }
+}
+
+@media (max-width: 420px) and (max-height: 740px) {
+  .page-hero.typographic-page-hero.home-welcome {
+    padding-top: 4.5rem;
+  }
+
+  .home-welcome .typographic-page-hero-inner,
+  .home-welcome .typographic-page-hero-aside {
+    gap: 0.25rem;
+  }
+
+  .home-welcome .typographic-page-hero-copy h1 {
+    margin-top: 0.5rem;
+  }
+
+  .home-welcome .lead {
+    line-height: 1.4;
+  }
+}
+
+/* Movement II: Who I am. */
+.home-practitioner {
+  padding-block: var(--section-air);
+  background: var(--forest);
+  color: var(--on-forest);
+}
+
+.home-practitioner .margin-note,
+.home-practitioner .eyebrow {
+  color: var(--on-forest-soft);
+}
+
+.home-practitioner-grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+.home-niamh-photo {
+  width: min(100%, 28rem);
+}
+
+.home-niamh-photo .photo-window-mat {
+  padding: clamp(2.8rem, 4vw, 3.2rem) clamp(0.6rem, 1.2vw, 0.9rem) clamp(0.6rem, 1.2vw, 0.9rem);
+  background: var(--on-forest);
+  border-color: rgba(243, 238, 226, 0.34);
+}
+
+.home-niamh-image {
+  object-position: center 12%;
+}
+
+.home-practitioner-copy {
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+}
+
+.home-practitioner-copy h2 {
+  max-width: 15ch;
+  font-size: var(--type-h2);
+}
+
+.home-practitioner-copy h2 em {
+  color: var(--accent-on-forest);
+}
+
+.home-practitioner-copy > p {
+  max-width: 62ch;
+  color: var(--on-forest-soft);
+}
+
+.home-credentials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+  width: 100%;
+}
+
+.home-credentials li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+}
+
+.home-credentials li > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--forest-500);
+  color: var(--accent-on-forest);
+}
+
+.home-practitioner-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.home-practitioner-links > a:first-child,
+.home-practitioner .quiet-link {
+  position: relative;
+  display: inline-flex;
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  color: var(--on-forest);
+  border-bottom: 1px solid var(--accent-on-forest);
+}
+
+.home-practitioner .quiet-link::after {
+  background: var(--accent-on-forest);
+}
+
+@media (min-width: 760px) {
+  .home-practitioner-grid {
+    grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .home-credentials {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Movement III: The Ledger. */
+.home-ledger {
+  padding-block: var(--section-air);
+  background: var(--cream);
+}
+
+.home-ledger h2,
+.home-practical h2 {
+  max-width: 17ch;
+  margin-top: 0.75rem;
+  font-size: var(--type-h2);
+}
+
+.home-ledger-list {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.home-ledger-entry {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(2.25rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.home-ledger-number {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1;
+  color: var(--forest-500);
+}
+
+.home-ledger-copy {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+}
+
+.home-ledger-copy h3 {
+  font-size: var(--type-h3);
+}
+
+.home-ledger-copy > p {
+  max-width: 64ch;
+  color: var(--ink-soft);
+}
+
+.home-ledger-areas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  width: min(100%, 44rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.home-ledger-areas li {
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.home-ledger-areas li:nth-child(even) {
+  padding-left: 1rem;
+  border-left: 1px solid var(--hairline);
+}
+
+.home-ledger-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.home-ledger-tags li,
+.home-insurers li {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--forest-500);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.home-river {
+  border-block: 1px solid var(--hairline);
+}
+
+@media (max-width: 500px) {
+  .home-ledger-entry {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .home-ledger-areas {
+    grid-template-columns: 1fr;
+  }
+
+  .home-ledger-areas li:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* Movement IV: the practical truth. */
+.home-practical {
+  padding-block: var(--section-air);
+  background: var(--cream-sink);
+}
+
+.home-practical-panels {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.home-paper-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--cream-raise);
+  border: 1px solid var(--hairline);
+}
+
+.home-panel-kicker {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--forest-500);
+}
+
+.home-paper-panel h3 {
+  font-size: var(--type-h3);
+}
+
+.home-paper-panel address {
+  min-height: 7.5rem;
+  font-style: normal;
+  color: var(--ink-soft);
+}
+
+.home-paper-panel .status {
+  margin-top: auto;
+}
+
+.home-prices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  border-block: 1px solid var(--hairline);
+}
+
+.home-price {
+  display: grid;
+  align-content: start;
+  padding: 1rem 0;
+}
+
+.home-price + .home-price {
+  padding-left: 1rem;
+  border-left: 1px solid var(--hairline);
+}
+
+.home-price span,
+.home-price small {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.home-price strong {
+  font-family: var(--serif);
+  font-size: var(--type-price);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--forest);
+}
+
+.home-hours {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.home-hours > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.86rem;
+}
+
+.home-hours dd {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.home-fees-panel > p:not(.home-panel-kicker) {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.home-fees-panel .btn {
+  margin-top: auto;
+}
+
+.home-insurers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 760px) {
+  .home-practical-panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-fees-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1120px) {
+  .home-practical-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(19rem, 1.25fr);
+  }
+
+  .home-fees-panel {
+    grid-column: auto;
+  }
+}
+
+/* Movement V: Shall we begin? */
+.home-closing {
+  border-bottom: 1px solid rgba(243, 238, 226, 0.18);
+}
+
+.home-closing .phone {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 2.25rem);
+  color: var(--on-forest);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-welcome-photo .photo-window-mat {
+    animation: home-photo-in 0.6s var(--ease-out) 0.24s both;
+  }
+}
+
+@keyframes home-photo-in {
+  from {
+    opacity: 0;
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-welcome-photo .photo-window-mat {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+/* ---------- Photo band: coast + cut-out woman ---------- */
+.home-photo-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(26rem, 60vh, 40rem);
+  display: grid;
+  align-items: center;
+  background: var(--forest);
+}
+
+.home-photo-band-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* Scrim: deep forest on the left for text legibility, softly clearing to the
+   right so the coast reads through — the gradient the client asked for. */
+.home-photo-band-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(28, 43, 35, 0.9) 0%,
+      rgba(28, 43, 35, 0.72) 32%,
+      rgba(28, 43, 35, 0.3) 62%,
+      rgba(28, 43, 35, 0.08) 100%
+    ),
+    linear-gradient(to top, rgba(28, 43, 35, 0.45), rgba(28, 43, 35, 0) 45%);
+}
+
+.home-photo-band-figure {
+  position: absolute;
+  right: clamp(-2rem, 1vw, 2rem);
+  bottom: 0;
+  z-index: 2;
+  width: clamp(14rem, 42vw, 30rem);
+  max-height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+}
+
+.home-photo-band-inner {
+  position: relative;
+  z-index: 3;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.home-photo-band-title {
+  max-width: 16ch;
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--on-forest);
+  text-shadow: 0 2px 24px rgba(16, 26, 20, 0.55);
+}
+
+.home-photo-band-title em {
+  font-style: italic;
+  color: var(--accent-on-forest);
+}
+
+.home-photo-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+}
+
+.home-photo-band-actions .quiet-link {
+  color: var(--on-forest);
+}
+
+.home-photo-band-actions .quiet-link::after {
+  background: var(--accent-on-forest);
+}
+
+@media (max-width: 640px) {
+  .home-photo-band {
+    min-height: 0;
+  }
+
+  .home-photo-band-figure {
+    position: relative;
+    display: block;
+    width: min(72vw, 18rem);
+    margin: 1.5rem auto -0.25rem;
+    right: auto;
+  }
+
+  .home-photo-band-inner {
+    padding-top: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .home-photo-band-scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(28, 43, 35, 0.86) 0%,
+        rgba(28, 43, 35, 0.55) 55%,
+        rgba(28, 43, 35, 0.78) 100%
+      );
+  }
+}

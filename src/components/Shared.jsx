@@ -1,83 +1,151 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { Button, LinkArrow } from "./Button";
 import { Reveal } from "./Reveal";
 import { site } from "../data/site";
 
-/* ---------- Ambient blurred background blobs (with gentle parallax) ---------- */
-export function Ambient({ parallax = true }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 40, damping: 20 });
-  const sy = useSpring(y, { stiffness: 40, damping: 20 });
-  const reduce = useReducedMotion();
+const RIVER_SPEED = 18;
 
-  useEffect(() => {
-    if (!parallax || reduce) return;
-    const onMove = (e) => {
-      x.set((e.clientX / window.innerWidth - 0.5) * 40);
-      y.set((e.clientY / window.innerHeight - 0.5) * 40);
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [parallax, reduce, x, y]);
-
+/** Editorial page opening: margin note, eyebrow, serif title, lead and action. */
+export function TypographicPageHero({ marginNote, eyebrow, title, lead, cta = true, aside, className = "" }) {
+  const action = cta === true ? <Button to="/booking">Book an appointment</Button> : cta;
   return (
-    <div className="hero-bg" aria-hidden="true">
-      <motion.div className="blob b1" style={{ x: sx, y: sy }} />
-      <motion.div className="blob b2" style={{ x: sy, y: sx }} />
-      <motion.div className="blob b3" style={{ x: sx, y: sy }} />
-      <div className="grain" />
-    </div>
+    <section className={["page-hero", "typographic-page-hero", className].filter(Boolean).join(" ")}>
+      <div className="container page-hero-inner typographic-page-hero-inner">
+        {marginNote && (
+          <Reveal gate={false} className="margin-note hero-margin-note">
+            {marginNote}
+          </Reveal>
+        )}
+        <div className="typographic-page-hero-copy">
+          {eyebrow && (
+            <Reveal gate={false}>
+              <p className="eyebrow">{eyebrow}</p>
+            </Reveal>
+          )}
+          <Reveal gate={false} delay={0.08}>
+            <h1>{title}</h1>
+          </Reveal>
+        </div>
+        <Reveal gate={false} delay={0.16} className="page-hero-aside typographic-page-hero-aside">
+          {lead && <p className="lead">{lead}</p>}
+          {aside}
+          {action}
+        </Reveal>
+      </div>
+    </section>
   );
 }
 
-/* ---------- Scrolling marquee ---------- */
-export function Marquee({ items, dark = false }) {
-  const group = (
-    <div className="marquee-group">
-      {items.map((t, i) => {
-        const isLabel = typeof t === "object" && t !== null && t.label;
+/** Twelve-column section with a dedicated left annotation column on wide screens. */
+export function MarginNoteSection({ note, eyebrow, children, id, className = "", as = "div" }) {
+  const Tag = as;
+  return (
+    <Tag id={id} className={["container", "margin-note-section", className].filter(Boolean).join(" ")}>
+      <div className="margin-note-section-label">
+        {note && <span className="margin-note">{note}</span>}
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+      </div>
+      <div className="margin-note-section-content">{children}</div>
+    </Tag>
+  );
+}
+
+/** A real photograph presented as a quiet, matted window. */
+export function PhotoWindow({
+  src,
+  srcSet,
+  sizes,
+  alt,
+  aspect = "4 / 3",
+  caption,
+  className = "",
+  imageClassName = "",
+  loading = "lazy",
+  objectPosition,
+}) {
+  return (
+    <figure className={["photo-window", className].filter(Boolean).join(" ")} style={{ "--photo-aspect": aspect }}>
+      <div className="photo-window-mat">
+        <img
+          className={imageClassName}
+          src={src}
+          srcSet={srcSet}
+          sizes={sizes}
+          alt={alt}
+          loading={loading}
+          style={objectPosition ? { objectPosition } : undefined}
+        />
+      </div>
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  );
+}
+
+/** A single rule and generous air, replacing decorative section dividers. */
+export function HorizonRule({ className = "" }) {
+  return <div className={["container", "horizon-rule", className].filter(Boolean).join(" ")} aria-hidden="true" />;
+}
+
+/** Decorative, measured conditions drift. Full lists remain available in page content. */
+export function QuietRiver({ items, dark = false, className = "" }) {
+  const groupRef = useRef(null);
+  const [duration, setDuration] = useState(null);
+
+  useEffect(() => {
+    const element = groupRef.current;
+    if (!element) return undefined;
+    const measure = () => {
+      const width = element.getBoundingClientRect().width;
+      if (width > 0) setDuration(width / RIVER_SPEED);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [items]);
+
+  const renderGroup = (ref, duplicate = false) => (
+    <div className="quiet-river-group marquee-group" ref={ref}>
+      {items.map((item, index) => {
+        const isLabel = typeof item === "object" && item !== null && item.label;
+        const value = isLabel ? item.label : item;
         return (
-          <span key={i} style={{ display: "contents" }}>
-            {isLabel ? <span className="marquee-label">{t.label}</span> : <span>{t}</span>}
-            <i />
+          <span className="quiet-river-item" key={`${duplicate ? "duplicate" : "source"}-${value}-${index}`}>
+            {isLabel ? <span className="marquee-label">{item.label}</span> : <span>{item}</span>}
+            <i aria-hidden="true" />
           </span>
         );
       })}
     </div>
   );
+
   return (
-    <div className={`marquee ${dark ? "dark" : ""}`} aria-hidden="true">
-      <div className="marquee-track">
-        {group}
-        {group}
+    <div className={["marquee", "quiet-river", dark ? "dark" : "", className].filter(Boolean).join(" ")} aria-hidden="true">
+      <div className="marquee-track quiet-river-track" style={duration ? { animationDuration: `${duration}s` } : undefined}>
+        {renderGroup(groupRef)}
+        {renderGroup(null, true)}
       </div>
     </div>
   );
 }
 
-/* ---------- Sub-page hero ---------- */
-export function PageHero({ eyebrow, title, lead, cta = true, aside }) {
+/** Full-bleed forest invitation used to close service and marketing pages. */
+export function ClosingRoom({ title, sub, children, cta = true, showPhone = true, className = "" }) {
+  const action = cta === true ? <Button to="/booking">Book an appointment</Button> : cta;
   return (
-    <section className="page-hero">
-      <Ambient />
-      <div className="container page-hero-inner">
-        <div>
-          <Reveal>
-            <p className="eyebrow on-dark">{eyebrow}</p>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h1>{title}</h1>
-          </Reveal>
-        </div>
-        <Reveal delay={0.18} className="page-hero-aside">
-          {lead && <p className="lead">{lead}</p>}
-          {aside}
-          {cta && (
-            <Button to="/booking" variant="glass">
-              Book an appointment
-            </Button>
+    <section className={["cta", "closing-room", className].filter(Boolean).join(" ")}>
+      <div className="container cta-inner closing-room-inner">
+        <Reveal>
+          <h2>{title}</h2>
+        </Reveal>
+        <Reveal delay={0.1} className="cta-aside closing-room-aside">
+          {sub && <p>{sub}</p>}
+          {children}
+          {action && <div>{action}</div>}
+          {showPhone && (
+            <a className="phone" href={site.phoneHref}>
+              {site.phone}
+            </a>
           )}
         </Reveal>
       </div>
@@ -85,102 +153,24 @@ export function PageHero({ eyebrow, title, lead, cta = true, aside }) {
   );
 }
 
-/* ---------- Closing call to action ---------- */
-export function CTA({ title, sub }) {
+/** Long-form paper layout with an optional sticky margin table of contents. */
+export function DocumentLayout({ children, toc = [], tocLabel = "On this page", className = "" }) {
   return (
-    <section className="cta" aria-labelledby="cta-title">
-      <Ambient parallax={false} />
-      <div className="container cta-inner">
-        <Reveal>
-          <h2 id="cta-title">{title}</h2>
-        </Reveal>
-        <Reveal delay={0.12} className="cta-aside">
-          <p>{sub}</p>
-          <div>
-            <Button to="/booking" variant="coral">
-              Book an appointment
-            </Button>
-          </div>
-          <a className="phone" href={site.phoneHref}>
-            {site.phone}
-          </a>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- Chapter label (sticky numbered sidebar) ---------- */
-export function Chapter({ num, label, children, id }) {
-  return (
-    <div className="container chapter" id={id}>
-      <div className="chapter-label">
-        <span className="num" aria-hidden="true">
-          {num}
-        </span>
-        <p className="eyebrow">{label}</p>
-      </div>
-      <div>{children}</div>
+    <div className={["container", "document-layout", className].filter(Boolean).join(" ")}>
+      {toc.length > 0 && (
+        <nav className="document-toc" aria-label={tocLabel}>
+          <p className="eyebrow">{tocLabel}</p>
+          <ul>
+            {toc.map((item) => (
+              <li key={item.id}>
+                <a href={`#${item.id}`}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      <article className="document-prose">{children}</article>
     </div>
-  );
-}
-
-/* ---------- Custom cursor dot ---------- */
-export function Cursor() {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.4 });
-  const [big, setBig] = useState(false);
-
-  useEffect(() => {
-    const onMove = (e) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-      const t = e.target;
-      setBig(!!(t && t.closest && t.closest("a, button, [role=button], input, select, textarea, label")));
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [x, y]);
-
-  return <motion.div className="cursor" style={{ x: sx, y: sy, scale: big ? 3 : 1 }} aria-hidden="true" />;
-}
-
-/* ---------- Preloader ---------- */
-export function Preloader({ onDone }) {
-  const [show, setShow] = useState(true);
-  const done = useRef(false);
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setShow(false);
-      if (!done.current) {
-        done.current = true;
-        onDone?.();
-      }
-    }, 1400);
-    return () => clearTimeout(t);
-  }, [onDone]);
-
-  if (!show) return null;
-  return (
-    <motion.div
-      className="preloader"
-      initial={{ opacity: 1 }}
-      exit={{ y: "-100%" }}
-      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-    >
-      <div className="word">
-        <motion.span
-          style={{ display: "inline-block" }}
-          initial={{ y: "110%" }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        >
-          Niamh Corran
-        </motion.span>
-      </div>
-    </motion.div>
   );
 }
 

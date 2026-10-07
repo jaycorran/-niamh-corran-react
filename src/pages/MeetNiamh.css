@@ -1,0 +1,172 @@
+/* The Quiet Room — Meet Niamh. */
+
+.meet-hero .typographic-page-hero-copy h1 {
+  max-width: 13ch;
+}
+
+.meet-section,
+.meet-quote {
+  padding-block: var(--section-air);
+}
+
+.meet-portrait,
+.meet-quote {
+  background: var(--cream);
+}
+
+.meet-philosophy {
+  background: var(--cream-sink);
+}
+
+.meet-section h2 {
+  max-width: 17ch;
+  font-size: var(--type-h2);
+}
+
+.meet-section h2 em {
+  color: var(--forest-700);
+}
+
+.meet-bio-grid {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.meet-niamh-window {
+  width: min(100%, 30rem);
+}
+
+.meet-niamh-window .photo-window-mat {
+  padding: clamp(2.8rem, 4vw, 3.2rem) clamp(0.6rem, 1.2vw, 0.9rem) clamp(0.6rem, 1.2vw, 0.9rem);
+}
+
+.meet-niamh-image {
+  object-position: center top;
+}
+
+.meet-bio-copy {
+  display: grid;
+  gap: 1.4rem;
+  max-width: 66ch;
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.meet-credentials {
+  margin-top: 0.6rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.meet-credentials li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink);
+}
+
+.meet-credentials li > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.55rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  color: var(--forest);
+  border: 1px solid var(--forest-500);
+}
+
+.meet-room-print {
+  width: min(100%, 48rem);
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  margin-left: auto;
+}
+
+.meet-section-heading {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 44rem;
+}
+
+.meet-value-list {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.meet-value-row {
+  display: grid;
+  grid-template-columns: clamp(3rem, 8vw, 6rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.meet-value-row > span {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  line-height: 1;
+  color: var(--forest-500);
+}
+
+.meet-value-row h3 {
+  margin-bottom: 0.65rem;
+  font-size: var(--type-h3);
+}
+
+.meet-value-row p {
+  max-width: 64ch;
+  color: var(--ink-soft);
+}
+
+.meet-quote blockquote {
+  position: relative;
+  max-width: 55rem;
+  margin: 0 auto;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.meet-quote blockquote > span {
+  position: absolute;
+  top: -0.4em;
+  left: 50%;
+  font-family: var(--serif);
+  font-size: clamp(5rem, 11vw, 9rem);
+  line-height: 1;
+  color: var(--clay);
+  transform: translateX(-50%);
+}
+
+.meet-quote blockquote p {
+  position: relative;
+  font-family: var(--serif);
+  font-size: var(--type-pull-quote);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--forest);
+}
+
+.meet-quote cite {
+  display: block;
+  margin-top: 2rem;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.meet-closing {
+  border-bottom: 1px solid rgba(243, 238, 226, 0.18);
+}
+
+@media (min-width: 760px) {
+  .meet-bio-grid {
+    grid-template-columns: minmax(17rem, 0.85fr) minmax(0, 1.15fr);
+  }
+}

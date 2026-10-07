@@ -1,0 +1,106 @@
+.fees-pricing-section {
+  padding-block: var(--section-air);
+  background: var(--cream);
+  border-top: 1px solid var(--hairline);
+}
+
+.fees-pricing {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.fee-panel {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  background: var(--cream-raise);
+  border: 1px solid var(--hairline);
+}
+
+.fee-panel h2 {
+  max-width: 12ch;
+  font-size: var(--type-h3);
+}
+
+.fee-tag {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: var(--forest);
+  color: var(--on-forest);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fee-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-family: var(--serif);
+  font-size: var(--type-price);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--forest);
+}
+
+.fee-price small {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.fee-includes {
+  display: grid;
+  gap: 0.8rem;
+  min-height: 7.5rem;
+  color: var(--ink-soft);
+}
+
+.fee-includes li,
+.fees-ledger li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.fee-includes svg,
+.fees-ledger svg {
+  flex: none;
+  margin-top: 0.28rem;
+  color: var(--forest);
+}
+
+.fees-small-print {
+  padding-block: var(--section-air);
+  border-top: 1px solid var(--hairline);
+}
+
+.fees-small-print h2 {
+  font-size: var(--type-h2);
+}
+
+.fees-ledger {
+  display: grid;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.fees-ledger li {
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+}
+
+@media (min-width: 760px) {
+  .fees-pricing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

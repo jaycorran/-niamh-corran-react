@@ -26,3 +26,7 @@ dist-ssr
 # Private documents (source material, not part of the website)
 *.docx
 ~$*.docx
+
+# Agent task artifacts and worktrees (not part of the website)
+.agents/
+.worktrees/
