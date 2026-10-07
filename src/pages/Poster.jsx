@@ -24,14 +24,11 @@ import "@fontsource-variable/playfair-display/wght.css";
 import "@fontsource-variable/playfair-display/wght-italic.css";
 import "@fontsource-variable/plus-jakarta-sans/wght.css";
 import "./Poster.css";
-
-// ---------------------------------------------------------------------
-// Dev-only assets, served by Vite from /Users/ijakubo/Desktop/Danio via
-// server.fs.allow + /@fs/. These URLs resolve ONLY on the dev server and
-// are never bundled. Kept as top-level consts so the build check can grep.
-// ---------------------------------------------------------------------
-const BG = "/@fs/Users/ijakubo/Desktop/Danio/BG.jpg";
-const EWE = "/@fs/Users/ijakubo/Desktop/Danio/EweTrans.png";
+// Dev-only poster images. Imported only by this module, which is reachable
+// solely through the DEV-gated dynamic import in App.jsx, so Rollup never
+// emits them into dist/.
+import BG from "./poster-assets/poster-background-coast.jpg";
+import EWE from "./poster-assets/poster-figure-neck-back-pain.webp";
 
 // ---------------------------------------------------------------------
 // Editable poster copy. Seeded from the Theme reference + src/data/site.js.
