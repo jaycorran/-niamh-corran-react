@@ -106,9 +106,6 @@ export default function Physiotherapy() {
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
                 </span>
-                <span className="icon-tile">
-                  <c.Icon size={26} />
-                </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
               </Item>

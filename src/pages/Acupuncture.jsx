@@ -1,7 +1,6 @@
 import { PageHero, CTA, Marquee } from "../components/Shared";
 import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Lotus, Moon, Flower, Body, Leaf, Pulse, Brain } from "../components/Icons";
-import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
 import { acupunctureAreas, acupunctureConditions } from "../data/site";
 import "./Acupuncture.css";
 
@@ -117,12 +116,12 @@ export default function Acupuncture() {
               </p>
               <figure className="section-photo">
                 <img
-                  src="/images/acupuncture-needle-placement-back-1600.webp"
-                  srcSet="/images/acupuncture-needle-placement-back-800.webp 800w, /images/acupuncture-needle-placement-back-1600.webp 1600w"
+                  src="/images/acupuncture-two-hand-technique-1600.webp"
+                  srcSet="/images/acupuncture-two-hand-technique-800.webp 800w, /images/acupuncture-two-hand-technique-1600.webp 1600w"
                   sizes="(min-width: 900px) 40vw, 100vw"
                   width="1600"
                   height="1200"
-                  alt="Niamh placing fine acupuncture needles along a patient's lower back"
+                  alt="Niamh using both hands to place acupuncture needles along a patient's upper back"
                   loading="eager"
                   decoding="async"
                 />
@@ -168,9 +167,6 @@ export default function Acupuncture() {
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
                 </span>
-                <span className="icon-tile">
-                  <c.Icon size={26} />
-                </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
               </Item>
@@ -192,18 +188,6 @@ export default function Acupuncture() {
                 Acupuncture is used around the world to provide safe, effective relief for many conditions. Niamh
                 commonly uses it to help with:
               </p>
-              <figure className="section-photo">
-                <img
-                  src="/images/acupuncture-two-hand-technique-1600.webp"
-                  srcSet="/images/acupuncture-two-hand-technique-800.webp 800w, /images/acupuncture-two-hand-technique-1600.webp 1600w"
-                  sizes="(min-width: 900px) 40vw, 100vw"
-                  width="1600"
-                  height="1200"
-                  alt="Niamh using both hands to place acupuncture needles along a patient's upper back"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
             </Reveal>
           </div>
           <Reveal delay={0.1}>
@@ -229,7 +213,6 @@ export default function Acupuncture() {
                 <p className="lead" style={{ marginTop: "1.25rem" }}>
                   An ancient therapy, used on its own or combined with acupuncture.
                 </p>
-                <PhotoPlaceholder className="section-photo-ph" tint="peach" aspect="4 / 3" caption="Cupping photo coming soon" />
               </Reveal>
             </div>
             <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -247,9 +230,6 @@ export default function Acupuncture() {
               <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
-                </span>
-                <span className="icon-tile">
-                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
@@ -272,18 +252,6 @@ export default function Acupuncture() {
                 <p className="lead" style={{ marginTop: "1.25rem" }}>
                   A modern form of acupuncture that adds gentle electrical stimulation.
                 </p>
-                <figure className="section-photo">
-                  <img
-                    src="/images/acupuncture-session-overview-1600.webp"
-                    srcSet="/images/acupuncture-session-overview-800.webp 800w, /images/acupuncture-session-overview-1600.webp 1600w"
-                    sizes="(min-width: 900px) 40vw, 100vw"
-                    width="1600"
-                    height="1200"
-                    alt="Overhead view of an acupuncture session showing needles placed along a patient's back"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
               </Reveal>
             </div>
             <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
@@ -299,9 +267,6 @@ export default function Acupuncture() {
               <Item as="li" className={`feature feature--${tints[i % tints.length]}`} key={c.t}>
                 <span className="idx" aria-hidden="true">
                   0{i + 1}
-                </span>
-                <span className="icon-tile">
-                  <c.Icon size={26} />
                 </span>
                 <h3>{c.t}</h3>
                 <p>{c.p}</p>
