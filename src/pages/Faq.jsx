@@ -6,27 +6,27 @@ import "./Faq.css";
 
 const faqs = [
   {
-    q: "Is acupuncture safe?",
-    a: "Yes. At the clinic, acupuncture is carried out by a chartered physiotherapist with specific training and qualifications in the technique. The needles are sterile, single-use and safely disposed of after every treatment.",
-  },
-  {
-    q: "Does it hurt?",
-    a: "It isn't a painful treatment. The fine needles are usually inserted just a few millimetres and produce a mild sensation at most. You may notice a small scratch as a needle goes in, and it's usually pain-free on removal.",
-  },
-  {
-    q: "Are there side effects?",
-    a: "Side effects are few, though some people feel a little tired or relaxed afterwards. Niamh will talk through anything relevant to you before treatment begins.",
-  },
-  {
     q: "What should I wear?",
     a: "Comfortable, loose-fitting clothing is best, so Niamh can assess and treat the affected area easily. Please also bring a pair of shorts to every appointment.",
   },
   {
-    q: "Can it be combined with physiotherapy?",
+    q: "Is acupuncture safe?",
+    a: "Yes. At the clinic, acupuncture is carried out by a chartered physiotherapist with specific training and qualifications in the technique. The needles are sterile, single-use and safely disposed of after every treatment.",
+  },
+  {
+    q: "Does acupuncture hurt?",
+    a: "It isn't a painful treatment. The fine needles are usually inserted just a few millimetres and produce a mild sensation at most. You may notice a small scratch as a needle goes in, and it's usually pain-free on removal.",
+  },
+  {
+    q: "Are there any side effects from acupuncture?",
+    a: "Side effects are few, though some people feel a little tired or relaxed afterwards. Niamh will talk through anything relevant to you before treatment begins.",
+  },
+  {
+    q: "Can acupuncture be combined with physiotherapy?",
     a: "Absolutely. Chartered physiotherapists are university-qualified healthcare professionals, and acupuncture is studied at postgraduate level. That puts Niamh in a rare position: able to combine acupuncture with hands-on physiotherapy, exercise and relaxation techniques within a single, joined-up plan.",
   },
   {
-    q: "Is it a replacement for medical advice?",
+    q: "Is acupuncture a replacement for medical advice?",
     a: "No. Acupuncture is a complementary therapy and is not a replacement for medical advice. If you're unsure whether it's right for you, get in touch and Niamh will be happy to talk it through.",
   },
 ];

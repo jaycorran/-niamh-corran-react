@@ -928,9 +928,9 @@ h3 em,
   font-weight: 600;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  background: var(--sage);
-  color: var(--forest);
-  border: 1px solid var(--sand-line);
+  background: var(--coral-bright);
+  color: var(--forest-deep);
+  border: 1px solid var(--coral-bright);
 }
 .service-cta {
   align-self: center;

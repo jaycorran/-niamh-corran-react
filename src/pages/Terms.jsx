@@ -70,15 +70,6 @@ export default function Terms() {
               system.
             </p>
 
-            <div className="legal-gaps-callout">
-              <p className="eyebrow">Under review</p>
-              <p>
-                This document is being reviewed with our solicitor: some wording (including 'unconditional
-                acceptance by browsing' and 'zero liability' phrasing, and the reference to 'our physical therapists'
-                as a team) may need updating to reflect that Niamh is a sole practitioner and that liability for
-                negligence causing personal injury cannot be excluded under Irish law.
-              </p>
-            </div>
           </div>
 
           <p style={{ marginTop: "2.5rem" }}>

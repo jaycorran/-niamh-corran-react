@@ -58,16 +58,16 @@ const steps = [
 // the array, and is owned by another stream — not edited here) for the FAQ teaser below.
 const faqTeaser = [
   {
+    q: "What should I wear?",
+    a: "Comfortable, loose-fitting clothing is best, so Niamh can assess and treat the affected area easily. Please also bring a pair of shorts to every appointment.",
+  },
+  {
     q: "Is acupuncture safe?",
     a: "Yes. At the clinic, acupuncture is carried out by a chartered physiotherapist with specific training and qualifications in the technique. The needles are sterile, single-use and safely disposed of after every treatment.",
   },
   {
-    q: "Does it hurt?",
+    q: "Does acupuncture hurt?",
     a: "It isn't a painful treatment. The fine needles are usually inserted just a few millimetres and produce a mild sensation at most. You may notice a small scratch as a needle goes in, and it's usually pain-free on removal.",
-  },
-  {
-    q: "Are there side effects?",
-    a: "Side effects are few, though some people feel a little tired or relaxed afterwards. Niamh will talk through anything relevant to you before treatment begins.",
   },
 ];
 

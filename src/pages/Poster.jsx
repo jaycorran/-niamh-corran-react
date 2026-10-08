@@ -17,7 +17,7 @@ import {
   ratio,
   dims,
 } from "./posterSizes.js";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Globe } from "lucide-react";
 // Poster-only Google fonts (SIL OFL 1.1), self-hosted via @fontsource.
 // Imported here so they ship only with this dev-only page.
 import "@fontsource-variable/playfair-display/wght.css";
@@ -39,6 +39,15 @@ const HEADLINE_PLAIN = "to what"; // sits before the italic emphasis
 const HEADLINE_EM = "you love."; // forest italic emphasis
 const CONTACT_LEAD = "Call or email to book";
 const CREDS = "CORU registered\nISCP chartered physiotherapist";
+const TREATS = [
+  "Back pain & sciatica",
+  "Arthritis",
+  "Chronic pain",
+  "Falls & balance",
+  "Sleep problems",
+  "Stress & anxiety",
+  "Women's health",
+];
 
 // Native aspect ratio of the cut-out (1813 × 2720, same as 5495 × 8243 master) — keeps the figure box
 // proportioned to the image.
@@ -130,12 +139,10 @@ export default function Poster() {
           {/* Content block */}
           <div className="poster__content">
             <header className="poster__brand">
-              <img className="poster__logo" src="/1A-original.svg" alt="" aria-hidden="true" />
+              <img className="poster__logo" src="/1A-flat.svg" alt="" aria-hidden="true" />
               <div className="poster__wordmark">
                 <span className="poster__name">{site.name}</span>
-                <span className="poster__tag">
-                  {site.tagline.toUpperCase().replace(" & ", "\n& ")}
-                </span>
+                <span className="poster__tag">{site.tagline.toUpperCase()}</span>
               </div>
             </header>
 
@@ -145,6 +152,13 @@ export default function Poster() {
               <em>{HEADLINE_EM}</em>
             </h1>
             <span className="poster__rule" aria-hidden="true" />
+
+            <p className="poster__treats-label">Commonly treated</p>
+            <ul className="poster__treats">
+              {TREATS.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
 
             <p className="poster__creds">{CREDS}</p>
           </div>
@@ -160,6 +174,10 @@ export default function Poster() {
               <p className="poster__email">
                 <Mail aria-hidden="true" strokeWidth={1.6} />
                 <span>{site.email}</span>
+              </p>
+              <p className="poster__email poster__site">
+                <Globe aria-hidden="true" strokeWidth={1.6} />
+                <span>www.niamhcorran.ie</span>
               </p>
             </div>
             <div className="poster__addresses">

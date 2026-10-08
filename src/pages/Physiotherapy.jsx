@@ -69,18 +69,6 @@ export default function Physiotherapy() {
               <h2 className="h2" style={{ marginTop: "1rem" }}>
                 Treating the cause, <em>not just the symptom</em>
               </h2>
-              <figure className="section-photo section-photo-tall">
-                <img
-                  src="/images/hamstring-treatment-plain-backdrop-1400.webp"
-                  srcSet="/images/hamstring-treatment-plain-backdrop-800.webp 800w, /images/hamstring-treatment-plain-backdrop-1400.webp 1400w"
-                  sizes="(min-width: 900px) 40vw, 100vw"
-                  width="1400"
-                  height="1867"
-                  alt="Niamh bending a patient's knee to assess and stretch the hamstring"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
             </Reveal>
           </div>
           <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>
