@@ -24,6 +24,8 @@ export const site = {
   phone: "087 251 7767",
   phoneHref: "tel:+353872517767",
   email: "niamhcorran1@gmail.com",
+  // TODO(confirm): the live domain hasn't been confirmed by the client yet.
+  website: "niamhcorran.ie",
   legalName: "Niamh Corran Physio Limited",
   registeredAddress: {
     line1: "Ballybogey",

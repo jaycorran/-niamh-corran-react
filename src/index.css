@@ -4,30 +4,33 @@
    ===================================================================== */
 
 :root {
-  /* ---- Core palette (warm-wellness, contrast-checked per design §1.2) ---- */
-  --cream: #faf7f2;          /* primary page background (warm off-white) */
-  --cream-2: #f3ede3;        /* secondary section background */
-  --paper: #ffffff;          /* card fill on cream sections */
-  --forest: #2f4a3c;         /* primary brand / action — buttons, links, icons, accent */
-  --forest-deep: #243a30;    /* hover/pressed, deep-green footer & CTA band fill */
-  --forest-700: #355441;     /* lighter forest for large fills / accents */
-  --ink: #1f2d26;            /* primary body + heading text on light bg (dark ink-green) */
-  --ink-soft: #45544c;       /* secondary/muted body text on light bg */
-  --sage: #e4ede4;           /* pastel card tint 1 */
-  --peach: #f6e4d7;          /* pastel card tint 2 */
-  --sky: #e2e9ef;            /* pastel card tint 3 (pale blue) */
-  --blush: #f3e2e4;          /* pastel card tint 4 (blush pink) */
-  --sand-line: #e7ddcd;      /* hairline divider / card border on light bg */
-  --hairline: rgba(31, 45, 38, 0.12);     /* computed thin rule on light bg */
-  --on-forest: #f3f0ea;      /* text/icon on deep-green bands (warm near-white) */
-  --on-forest-soft: #c3d2c7; /* muted text on deep-green bands (sage-grey) */
-  --accent-on-dark: #a9d4bf; /* italic <em> accent on deep-green bands (mint, AA on forest-deep) */
-  --line-dark: rgba(243, 240, 234, 0.16); /* hairline on deep-green bands */
-  --focus: #2f4a3c;          /* focus-ring colour (forest) */
+  /* ---- Core palette: the original site's navy, coral and pearl (origin/main "Kinsale
+     tide") applied to the light layout. Token names are kept from the light theme so
+     every component resolves without renaming: "forest" now means the navy brand
+     colour. Contrast-checked (WCAG AA) on pearl and on navy. ---- */
+  --cream: #f7f4ee;          /* primary page background (warm pearl) */
+  --cream-2: #efe9df;        /* secondary section background (deeper pearl) */
+  --paper: #ffffff;          /* card fill on pearl sections */
+  --forest: #12303b;         /* primary brand navy — links, icons, outlines (≈12:1 on pearl) */
+  --forest-deep: #0b1f27;    /* deep harbour ink — footer & CTA band fill, hover/pressed */
+  --forest-700: #1c4a57;     /* teal-navy for large fills / secondary accents */
+  --ink: #12252d;            /* body + heading text on light bg */
+  --ink-soft: #4f6168;       /* secondary/muted body text on light bg (≈5.6:1 on pearl) */
+  --sage: #d9eee6;           /* pastel card tint 1 (pale sea-glass) */
+  --peach: #fde3d9;          /* pastel card tint 2 (pale coral) */
+  --sky: #e1ebef;            /* pastel card tint 3 (pale harbour blue) */
+  --blush: #f1e7da;          /* pastel card tint 4 (sand) */
+  --sand-line: #e4d9c6;      /* hairline divider / card border on light bg */
+  --hairline: rgba(11, 31, 39, 0.12);     /* computed thin rule on light bg */
+  --on-forest: #f7f4ee;      /* text/icon on navy bands (pearl) */
+  --on-forest-soft: #b8c7cb; /* muted text on navy bands (≥7.8:1) */
+  --accent-on-dark: #ff7a59; /* italic <em> accent on navy bands (coral, ≥5.3:1) */
+  --line-dark: rgba(247, 244, 238, 0.14); /* hairline on navy bands */
+  --focus: #12303b;          /* focus-ring colour (navy; coral is <3:1 on pearl) */
+  --coral-bright: #ff7a59;   /* coral CTA fill + decorative dots/rules */
+  --coral-ink: #c2451f;      /* coral as TEXT on pearl (italic accents, labels; ≈4.6:1) */
 
-  /* ---- Legacy-token aliases (kept so untouched page files resolve to the
-     new palette until each page stream restyles). Mapped per design §1.2:
-     dark registers → forest, light bg → cream, accent → forest. ---- */
+  /* ---- Legacy-token aliases ---- */
   --harbour-deep: var(--forest-deep);
   --harbour: var(--forest-700);
   --harbour-ink: var(--ink);
@@ -36,8 +39,8 @@
   --seafoam: var(--on-forest-soft);
   --seafoam-tile: var(--sage);
   --sand: var(--sand-line);
-  --coral: var(--forest);
-  --coral-deep: var(--forest);
+  --coral: var(--coral-bright);   /* fills / decoration only — never body text on pearl */
+  --coral-deep: var(--coral-ink); /* coral-family text on light backgrounds */
   --line: var(--hairline);
   --line-light: var(--line-dark);
 
@@ -71,8 +74,8 @@
   --space-cta-hero: clamp(2rem, 3.5vw, 3rem);
 
   /* ---- Shadows (subtle only) ---- */
-  --shadow-sm: 0 1px 2px rgba(31, 45, 38, 0.05);
-  --shadow-card: 0 18px 40px -28px rgba(31, 45, 38, 0.22);
+  --shadow-sm: 0 1px 2px rgba(11, 31, 39, 0.05);
+  --shadow-card: 0 18px 40px -28px rgba(11, 31, 39, 0.22);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -173,10 +176,10 @@ h3 em,
   font-style: italic;
   font-weight: 500;
   font-synthesis: none;
-  color: var(--forest);
+  color: var(--coral-ink);
 }
 
-/* On any deep-green band the forest <em> accent would be forest-on-forest (≈1.26:1 in the
+/* On any navy band the forest <em> accent would be forest-on-forest (≈1.26:1 in the
    CTA, effectively invisible). Repaint it as a light mint tint so italic accents stay
    legible (AA+) on dark fills: CTA, footer/band statement, menu overlay, any .on-dark. */
 .cta em,
@@ -191,7 +194,7 @@ h3 em,
 }
 
 ::selection {
-  background: var(--sage);
+  background: #9fe1cb;
   color: var(--forest-deep);
 }
 
@@ -262,7 +265,7 @@ h3 em,
   content: "";
   width: 22px;
   height: 1px;
-  background: var(--forest);
+  background: var(--coral);
 }
 .eyebrow.on-dark {
   color: var(--on-forest-soft);
@@ -374,11 +377,14 @@ h3 em,
   background: var(--forest);
   color: var(--on-forest);
 }
-/* "coral" variant retained as the PRIMARY forest pill (legacy name kept to avoid
-   touching ~10 call sites across pages — see design §2.2). Renders solid forest. */
+/* "coral" variant: the PRIMARY call to action, as on the original site — coral pill
+   with deep-ink text (≈6.5:1), sliding to navy with pearl text on hover. */
 .btn.coral {
-  --bg: var(--forest);
-  --fg: var(--on-forest);
+  --bg: var(--coral-bright);
+  --fg: var(--forest-deep);
+}
+.btn.coral .icon {
+  background: rgba(11, 31, 39, 0.12);
 }
 .btn.coral::after {
   background: var(--forest-deep);
@@ -989,7 +995,7 @@ h3 em,
   width: 90%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(47, 74, 60, 0.25), transparent 65%);
+  background: radial-gradient(circle, rgba(18, 48, 59, 0.25), transparent 65%);
   filter: blur(30px);
   opacity: 0;
   transition: opacity 0.6s;
@@ -2022,7 +2028,7 @@ h3 em,
   height: 8px;
   border-radius: 50%;
   background: var(--forest);
-  box-shadow: 0 0 0 0 rgba(47, 74, 60, 0.5);
+  box-shadow: 0 0 0 0 rgba(18, 48, 59, 0.5);
   animation: pulse 2s infinite;
 }
 .info-card .status i {
@@ -2034,10 +2040,10 @@ h3 em,
 }
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(47, 74, 60, 0.5);
+    box-shadow: 0 0 0 0 rgba(18, 48, 59, 0.5);
   }
   100% {
-    box-shadow: 0 0 0 10px rgba(47, 74, 60, 0);
+    box-shadow: 0 0 0 10px rgba(18, 48, 59, 0);
   }
 }
 
@@ -2074,7 +2080,7 @@ h3 em,
 }
 
 /* Niamh portrait crop utility (design §3 issue 8) — single authoritative rule.
-   Every <img src="/Niamh.jpeg"> carries className="niamh-photo" (added by the Home
+   Every Niamh portrait <img> carries className="niamh-photo" (added by the Home
    and MeetNiamh streams in JSX) so the whole head stays visible (~50px headroom). */
 .niamh-photo img,
 img.niamh-photo {
@@ -2303,9 +2309,9 @@ img.niamh-photo {
     100deg,
     var(--cloud) 0%,
     var(--cloud) 30%,
-    rgba(253, 251, 247, 0.85) 42%,
-    rgba(253, 251, 247, 0.3) 56%,
-    rgba(253, 251, 247, 0) 68%
+    rgba(247, 244, 238, 0.85) 42%,
+    rgba(247, 244, 238, 0.3) 56%,
+    rgba(247, 244, 238, 0) 68%
   );
 }
 .photo-band__figure {
@@ -2359,8 +2365,8 @@ img.niamh-photo {
       180deg,
       var(--cloud) 0%,
       var(--cloud) 36%,
-      rgba(253, 251, 247, 0.7) 48%,
-      rgba(253, 251, 247, 0) 62%
+      rgba(247, 244, 238, 0.7) 48%,
+      rgba(247, 244, 238, 0) 62%
     );
   }
   .photo-band__figure {

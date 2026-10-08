@@ -1,8 +1,10 @@
 /* Physiotherapy page — page-specific rules only (design §6, Stream E). */
 
-/* PhotoPlaceholder standing in for the "Approach" section photo (no physio stock photo
-   available; none may be invented, design §3 issue "approach"). Matches the spacing the
-   .section-photo figure used (margin-top under the heading). */
-.section-photo-ph {
-  margin: 2rem 0 0;
+/* "Approach" photo: a portrait-format treatment shot, so use a taller frame than the
+   shared 4:3 .section-photo and keep Niamh's face and the patient's knee in view. */
+.section-photo-tall {
+  aspect-ratio: 4 / 5;
+}
+.section-photo-tall img {
+  object-position: 50% 45%;
 }

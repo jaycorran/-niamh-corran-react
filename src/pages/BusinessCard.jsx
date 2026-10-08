@@ -10,7 +10,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toPng } from "html-to-image";
-import { Phone, Mail, MapPin, Download, Printer } from "lucide-react";
+import { Phone, Mail, MapPin, Globe, Download, Printer } from "lucide-react";
 import { site } from "../data/site.js";
 // Poster/card typefaces (SIL OFL 1.1), self-hosted via @fontsource.
 import "@fontsource-variable/playfair-display/wght.css";
@@ -35,28 +35,30 @@ const ROLE = "Chartered Physiotherapist";
 const CREDS = ["CORU registered", "ISCP chartered member"];
 const AREA = `${site.locations.map((l) => l.name).join(" & ")}, Co. Cork`;
 
+// Palette matches the site: navy, coral and warm pearl.
 const STYLES = [
-  { id: "linen", label: "Linen", front: "#faf7f2", back: "#243a30" },
-  { id: "forest", label: "Forest", front: "#243a30", back: "#faf7f2" },
-  { id: "coast", label: "Coast", front: "#9db7c9", back: "#faf7f2" },
-  { id: "editorial", label: "Editorial", front: "#faf7f2", back: "#f3ede3" },
-  { id: "sage", label: "Sage", front: "#e4ede4", back: "#243a30" },
+  { id: "linen", label: "Linen", front: "#f7f4ee", back: "#0b1f27" },
+  { id: "navy", label: "Navy", front: "#0b1f27", back: "#f7f4ee" },
+  { id: "coast", label: "Coast", front: "#9db7c9", back: "#f7f4ee" },
+  { id: "editorial", label: "Editorial", front: "#f7f4ee", back: "#efe9df" },
+  { id: "sage", label: "Sea glass", front: "#d9eee6", back: "#0b1f27" },
 ];
 const STYLE_IDS = STYLES.map((s) => s.id);
 const DPI_OPTIONS = [300, 600];
 
 // Logo colours per style + side, as [main, accent]. Set as SVG fill attributes
 // (not CSS vars) so the PNG export, which inlines computed styles, keeps them.
-const LIGHT = ["#2f4a3c", "#6f8f7c"];
-const DARK = ["#f3f0ea", "#a9d4bf"];
+// Brand-mark colours from public/1A-original.svg / 1A-reverse.svg.
+const LIGHT = ["#03244a", "#7ba6bb"];
+const DARK = ["#f5f2ec", "#8fb6c9"];
 const MARK_FILLS = {
   linen: { front: LIGHT, back: DARK },
-  forest: { front: DARK, back: LIGHT },
+  navy: { front: DARK, back: LIGHT },
   coast: { front: LIGHT, back: LIGHT },
   editorial: { front: LIGHT, back: LIGHT },
   sage: { front: LIGHT, back: DARK },
 };
-const WATERMARK = ["rgba(47, 74, 60, 0.09)", "rgba(47, 74, 60, 0.14)"];
+const WATERMARK = ["rgba(18, 48, 59, 0.08)", "rgba(18, 48, 59, 0.13)"];
 
 /** Brand mark (paths from public/1A-original.svg). */
 function Mark({ className = "", fills = LIGHT }) {
@@ -142,6 +144,10 @@ function Back({ styleId, guides }) {
             <Mail aria-hidden="true" strokeWidth={1.8} />
             <span>{site.email}</span>
           </li>
+          <li className="bc__web">
+            <Globe aria-hidden="true" strokeWidth={1.8} />
+            <span>{site.website}</span>
+          </li>
           <li>
             <MapPin aria-hidden="true" strokeWidth={1.8} />
             <span>{AREA}</span>
@@ -174,7 +180,8 @@ function Sheet({ children, marks, sheetRef }) {
 
 export default function BusinessCard() {
   const [params, setParams] = useSearchParams();
-  const styleId = STYLE_IDS.includes(params.get("style")) ? params.get("style") : "linen";
+  const requested = params.get("style") === "forest" ? "navy" : params.get("style"); // old links
+  const styleId = STYLE_IDS.includes(requested) ? requested : "linen";
   const bleed = params.get("bleed") !== "0";
   const marks = bleed && params.get("marks") === "1";
   const guides = params.get("guides") !== "0";

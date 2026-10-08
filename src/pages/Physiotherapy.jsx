@@ -1,7 +1,6 @@
 import { PageHero, CTA, Marquee } from "../components/Shared";
 import { Reveal, Stagger, Item } from "../components/Reveal";
 import { Spine, Joint, Pulse, Cane, Scalpel, Brain } from "../components/Icons";
-import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
 import { physioAreas, physioConditions } from "../data/site";
 import "./Physiotherapy.css";
 
@@ -70,7 +69,18 @@ export default function Physiotherapy() {
               <h2 className="h2" style={{ marginTop: "1rem" }}>
                 Treating the cause, <em>not just the symptom</em>
               </h2>
-              <PhotoPlaceholder className="section-photo-ph" tint="sage" aspect="4 / 3" />
+              <figure className="section-photo section-photo-tall">
+                <img
+                  src="/images/hamstring-treatment-plain-backdrop-1400.webp"
+                  srcSet="/images/hamstring-treatment-plain-backdrop-800.webp 800w, /images/hamstring-treatment-plain-backdrop-1400.webp 1400w"
+                  sizes="(min-width: 900px) 40vw, 100vw"
+                  width="1400"
+                  height="1867"
+                  alt="Niamh bending a patient's knee to assess and stretch the hamstring"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
             </Reveal>
           </div>
           <Reveal delay={0.1} className="prose" style={{ fontSize: "1.12rem" }}>

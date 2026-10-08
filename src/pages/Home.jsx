@@ -89,18 +89,20 @@ export default function Home() {
     <>
       {/* ============ HERO ============ */}
       <section className="hero" aria-labelledby="hero-title">
-        {/* Full-bleed treatment-room image, bleeding to the right edge and under the
-            transparent header. A cream-left gradient keeps the left copy and the dark
-            header text readable; a soft bottom fade blends into the Wave divider. */}
+        {/* Portrait treatment photo: full-bleed behind the copy on mobile, the right-hand
+            panel on desktop, fading into cream towards the copy; a soft bottom fade
+            blends into the Wave divider. */}
         <div className="hero-media">
           <img
             className="hero-media__img"
-            src="/images/hero-treatment-1672.webp"
-            srcSet="/images/hero-treatment-900.webp 900w, /images/hero-treatment-1672.webp 1672w"
-            sizes="100vw"
+            /* PREVIEW: trying ~/Desktop/background.jpg as the hero. To roll back, restore
+               the hamstring-treatment-clinic-room src/srcSet/sizes, width 1400 / height 1867,
+               drop the inline style, and delete public/images/hero-background-preview.jpg. */
+            src="/images/hero-background-preview.jpg"
             width="1672"
             height="941"
-            alt="Physiotherapist treating a patient's leg in a bright treatment room"
+            style={{ objectPosition: "62% 30%", transformOrigin: "62% 30%" }}
+            alt="Niamh treating a patient in her clinic, bending their knee to stretch the hamstring"
             fetchPriority="high"
             decoding="async"
           />
@@ -285,8 +287,13 @@ export default function Home() {
             <Reveal>
               <div className="portrait">
                 <img
-                  src="/home-clinic.jpeg"
-                  alt="Niamh's treatment room — acupuncture wall charts, a treatment table with towels, and a heat lamp"
+                  className="niamh-photo"
+                  src="/images/niamh-corran-portrait-1400.webp"
+                  srcSet="/images/niamh-corran-portrait-800.webp 800w, /images/niamh-corran-portrait-1400.webp 1400w"
+                  sizes="(min-width: 900px) 45vw, 100vw"
+                  width="1400"
+                  height="1868"
+                  alt="Niamh Corran, chartered physiotherapist and acupuncturist"
                   loading="lazy"
                 />
                 <span className="tag">Kinsale & Carrigaline, Co. Cork</span>

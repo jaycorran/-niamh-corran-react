@@ -5,16 +5,17 @@
    ===================================================================== */
 
 .card-root {
-  --c-cream: #faf7f2;
-  --c-cream-2: #f3ede3;
-  --c-sage: #e4ede4;
-  --c-ink: #1f2d26;
-  --c-forest: #2f4a3c;
-  --c-leaf: #6f8f7c;
-  --c-deep: #243a30;
-  --c-on-deep: #f3f0ea;
-  --c-on-deep-soft: #c3d2c7;
-  --c-mint: #a9d4bf;
+  /* Site palette (src/index.css): navy, coral, warm pearl. */
+  --c-cream: #f7f4ee;
+  --c-cream-2: #efe9df;
+  --c-sage: #d9eee6;
+  --c-ink: #12252d;
+  --c-navy: #12303b;
+  --c-deep: #0b1f27;
+  --c-on-deep: #f7f4ee;
+  --c-on-deep-soft: #b8c7cb;
+  --c-coral: #ff7a59;
+  --c-coral-ink: #c2451f;
   --serif: "Playfair Display Variable", Georgia, serif;
   --sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
 
@@ -23,7 +24,7 @@
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  background: #1a2420;
+  background: #08161c;
   color: var(--c-on-deep);
   font-family: var(--sans);
 }
@@ -82,7 +83,7 @@
   cursor: pointer;
 }
 .card-check input {
-  accent-color: var(--c-mint);
+  accent-color: var(--c-coral);
 }
 .card-check.is-disabled {
   opacity: 0.45;
@@ -103,7 +104,7 @@
   padding: 0.3rem 0.5rem;
   border: 1px solid rgba(243, 240, 234, 0.3);
   border-radius: 8px;
-  background: var(--c-forest);
+  background: var(--c-navy);
   color: var(--c-on-deep);
   font: inherit;
 }
@@ -245,8 +246,8 @@
 .bc {
   --bg: var(--c-cream);
   --fg: var(--c-ink);
-  --soft: var(--c-forest);
-  --icon: var(--c-forest);
+  --soft: var(--c-navy);
+  --icon: var(--c-navy);
   --safe: 4.5mm;
 
   position: absolute;
@@ -303,16 +304,17 @@
 .bc__name {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: 6.6mm;
+  font-size: 5mm;
   line-height: 1;
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
+/* What she does is the headline: the tagline is set larger than the name. */
 .bc__tag {
-  margin-top: 1.7mm !important;
-  font-size: 2.15mm;
-  font-weight: 600;
-  letter-spacing: 0.28em;
+  margin-top: 1.8mm !important;
+  font-size: 3mm;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--soft);
   white-space: nowrap;
@@ -339,7 +341,7 @@
   align-self: end;
 }
 .bc--back .bc__name {
-  font-size: 4.6mm;
+  font-size: 4mm;
 }
 .bc__role {
   margin-top: 1.3mm !important;
@@ -373,6 +375,11 @@
   gap: 1.7mm;
   white-space: nowrap;
 }
+/* Website in navy on light sides (matches the site); pearl on navy sides. */
+.bc__web {
+  font-weight: 600;
+  color: var(--web, var(--c-navy));
+}
 .bc__contact svg {
   flex: none;
   width: 2.7mm;
@@ -383,26 +390,27 @@
 /* ---- Dark side tokens (reused) ----------------------------------------- */
 .bc--linen.bc--back,
 .bc--sage.bc--back,
-.bc--forest.bc--front {
+.bc--navy.bc--front {
   --bg: var(--c-deep);
   --fg: var(--c-on-deep);
   --soft: var(--c-on-deep-soft);
-  --icon: var(--c-mint);
+  --icon: var(--c-coral);
+  --web: var(--c-on-deep);
 }
 
-/* ---- 1. Linen: cream front, forest back ------------------------------- */
+/* ---- 1. Linen: cream front, navy back --------------------------------- */
 /* (defaults + dark-side tokens) */
 
-/* ---- 2. Forest: deep front, cream editorial back ---------------------- */
-.bc--forest.bc--front {
+/* ---- 2. Navy: deep front, cream editorial back ------------------------ */
+.bc--navy.bc--front {
   background:
-    radial-gradient(70mm 50mm at 50% 35%, rgba(169, 212, 191, 0.14), transparent 70%),
+    radial-gradient(70mm 50mm at 50% 35%, rgba(143, 182, 201, 0.16), transparent 70%),
     var(--bg);
 }
-.bc--forest.bc--front .bc__tag {
-  color: var(--c-mint);
+.bc--navy.bc--front .bc__tag {
+  color: var(--c-coral);
 }
-.bc--forest.bc--back .bc__safe,
+.bc--navy.bc--back .bc__safe,
 .bc--coast.bc--back .bc__safe {
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -411,18 +419,18 @@
   row-gap: 0;
   align-content: center;
 }
-.bc--forest.bc--back .bc__logo,
+.bc--navy.bc--back .bc__logo,
 .bc--coast.bc--back .bc__logo {
   position: absolute;
   top: 0;
   right: 0;
   width: 9mm;
 }
-.bc--forest.bc--back .bc__contact,
+.bc--navy.bc--back .bc__contact,
 .bc--coast.bc--back .bc__contact {
   margin-top: 3.4mm;
   padding-top: 3.4mm;
-  border-top: 0.2mm solid rgba(47, 74, 60, 0.28);
+  border-top: 0.2mm solid rgba(18, 48, 59, 0.28);
 }
 
 /* ---- 3. Coast: photo front, cream back ------------------------------ */
@@ -443,10 +451,10 @@
   z-index: 1;
   background: linear-gradient(
     95deg,
-    rgba(250, 247, 242, 0.95) 0%,
-    rgba(250, 247, 242, 0.92) 52%,
-    rgba(250, 247, 242, 0.5) 72%,
-    rgba(250, 247, 242, 0) 92%
+    rgba(247, 244, 238, 0.95) 0%,
+    rgba(247, 244, 238, 0.92) 52%,
+    rgba(247, 244, 238, 0.5) 72%,
+    rgba(247, 244, 238, 0) 92%
   );
 }
 .bc--coast.bc--front .bc__safe,
@@ -461,7 +469,7 @@
 }
 .bc--coast.bc--front .bc__tag,
 .bc--sage.bc--front .bc__tag {
-  letter-spacing: 0.22em;
+  letter-spacing: 0.12em;
 }
 .bc--coast.bc--back {
   --bg: var(--c-cream);
@@ -488,12 +496,12 @@
   width: 9mm;
 }
 .bc--editorial.bc--front .bc__name {
-  font-size: 8.2mm;
+  font-size: 5.6mm;
 }
 .bc--editorial.bc--front .bc__tag {
-  margin-top: 1.4mm !important;
+  margin-top: 1.6mm !important;
   font-family: var(--serif);
-  font-size: 3.3mm;
+  font-size: 5mm;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -501,7 +509,7 @@
 }
 .bc--editorial .bc__tag em {
   font-style: italic;
-  color: var(--c-forest);
+  color: var(--c-coral-ink);
 }
 .bc--editorial.bc--back {
   --bg: var(--c-cream-2);
@@ -513,7 +521,7 @@
   height: 0.45mm;
   margin-bottom: 3.2mm;
   border-radius: 1mm;
-  background: var(--c-forest);
+  background: var(--c-navy);
 }
 .bc--editorial.bc--back .bc__safe {
   grid-template-columns: 1fr 1fr;
@@ -547,11 +555,11 @@
 .bc--editorial.bc--back .bc__contact {
   align-self: center;
   padding-left: 4.5mm;
-  border-left: 0.2mm solid rgba(47, 74, 60, 0.28);
+  border-left: 0.2mm solid rgba(18, 48, 59, 0.28);
   font-size: 2.3mm;
 }
 
-/* ---- 5. Sage: pastel front with oversized watermark mark ------------- */
+/* ---- 5. Sea glass: pastel front with oversized watermark mark -------- */
 .bc--sage.bc--front {
   --bg: var(--c-sage);
 }

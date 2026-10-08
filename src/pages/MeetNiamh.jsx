@@ -48,7 +48,11 @@ export default function MeetNiamh() {
               <div className="photo-collage-item photo-collage-main">
                 <img
                   className="niamh-photo"
-                  src="/Niamh.jpeg"
+                  src="/images/niamh-corran-portrait-1400.webp"
+                  srcSet="/images/niamh-corran-portrait-800.webp 800w, /images/niamh-corran-portrait-1400.webp 1400w"
+                  sizes="(min-width: 900px) 40vw, 100vw"
+                  width="1400"
+                  height="1868"
                   alt="Niamh Corran, chartered physiotherapist and acupuncturist"
                 />
               </div>

@@ -2,7 +2,7 @@
    uses shared primitives from index.css (Chapter, .info, .steps, .quotes, .photo-band,
    .services, .certified-band, etc.) and needs no page-specific CSS. */
 
-/* ---------- Hero (full-bleed treatment-room image) ---------- */
+/* ---------- Hero (portrait treatment photo) ---------- */
 
 .hero {
   position: relative;
@@ -22,11 +22,18 @@
   }
 }
 
-/* Full-bleed image layer: covers the hero, bleeds under the header and to the right. */
+/* Image layer: full-bleed on mobile; on desktop the right-hand ~60% of the hero, so the
+   portrait photo shows Niamh's face and the patient's knee without a letterbox crop. */
 .hero-media {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden; /* the 1.04 load-in scale must not spill past the panel's faded edge */
+}
+@media (min-width: 900px) {
+  .hero-media {
+    left: 40%;
+  }
 }
 .hero-media__img {
   position: absolute;
@@ -34,21 +41,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 70% 35%;
-  transform-origin: 70% 35%;
+  object-position: 55% 30%;
+  transform-origin: 55% 30%;
 }
-/* Cream-left gradient keeps the left copy + dark header text readable; the image is
-   revealed from ~60% rightward where the therapist and patient sit. */
+/* Desktop: the panel's left edge dissolves into cream so it meets the copy softly. */
 .hero-media::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    100deg,
+    90deg,
     var(--cream) 0%,
-    var(--cream) 26%,
-    rgba(250, 247, 242, 0.72) 44%,
-    rgba(250, 247, 242, 0) 62%
+    rgba(247, 244, 238, 0.6) 14%,
+    rgba(247, 244, 238, 0) 34%
   );
 }
 /* Soft bottom fade into the Wave divider. */
@@ -58,22 +63,26 @@
   right: 0;
   bottom: 0;
   height: 28%;
-  background: linear-gradient(to bottom, rgba(250, 247, 242, 0), var(--cream));
+  background: linear-gradient(to bottom, rgba(247, 244, 238, 0), var(--cream));
 }
 @media (max-width: 899px) {
-  /* Mobile: stronger cream fade; focus on the therapist's face + hands so the people
-     are not cropped away in the shorter visible band below the copy. */
+  /* Mobile: the portrait photo would sit behind the copy (hiding Niamh's face), so it
+     drops into normal flow below the copy instead, full width, fading in from cream. */
+  .hero {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-media {
+    position: relative;
+    order: 2;
+    aspect-ratio: 4 / 5;
+    margin-top: -2rem;
+  }
   .hero-media__img {
-    object-position: 74% 46%;
+    object-position: 55% 35%;
   }
   .hero-media::after {
-    background: linear-gradient(
-      168deg,
-      var(--cream) 0%,
-      var(--cream) 42%,
-      rgba(250, 247, 242, 0.9) 58%,
-      rgba(250, 247, 242, 0.4) 100%
-    );
+    background: linear-gradient(to bottom, var(--cream) 0%, rgba(247, 244, 238, 0) 22%);
   }
 }
 
