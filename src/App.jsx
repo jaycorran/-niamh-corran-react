@@ -33,6 +33,7 @@ const BusinessCard = import.meta.env.DEV
   : null;
 
 const SITE_TITLE_SUFFIX = "Niamh Corran — Physiotherapy & Acupuncture, Kinsale & Carrigaline";
+const SITE_URL = "https://niamhcorran.ie";
 const jsonLd = buildJsonLd(site);
 
 const pageVariants = {
@@ -42,13 +43,16 @@ const pageVariants = {
 };
 
 function Page({ children, title, description }) {
+  const { pathname } = useLocation();
   useEffect(() => {
+    const canonicalPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
     setPageSeo({
       title: title ? `${title} | ${SITE_TITLE_SUFFIX}` : SITE_TITLE_SUFFIX,
       description: description || site.brandLine,
       jsonLd,
+      canonical: `${SITE_URL}${canonicalPath}`,
     });
-  }, [title, description]);
+  }, [title, description, pathname]);
   return (
     <motion.main id="main" variants={pageVariants} initial="initial" animate="enter" exit="exit">
       {children}

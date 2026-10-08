@@ -33,9 +33,10 @@ export function buildJsonLd(site) {
 
 const META_DESCRIPTION_ID = "meta-description";
 const JSON_LD_ID = "jsonld-medicalbusiness";
+const CANONICAL_ID = "canonical-link";
 
-/** Sets/updates the document title, meta description and JSON-LD script for the current route. */
-export function setPageSeo({ title, description, jsonLd }) {
+/** Sets/updates the document title, meta description, canonical URL and JSON-LD script for the current route. */
+export function setPageSeo({ title, description, jsonLd, canonical }) {
   document.title = title;
 
   let meta = document.getElementById(META_DESCRIPTION_ID);
@@ -46,6 +47,17 @@ export function setPageSeo({ title, description, jsonLd }) {
     document.head.appendChild(meta);
   }
   meta.setAttribute("content", description || "");
+
+  if (canonical) {
+    let link = document.getElementById(CANONICAL_ID);
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      link.id = CANONICAL_ID;
+      document.head.appendChild(link);
+    }
+    link.setAttribute("href", canonical);
+  }
 
   let script = document.getElementById(JSON_LD_ID);
   if (!script) {
